@@ -1,0 +1,41 @@
+[ ENGLISH ]
+
+    To Run VCStudio you have to open run.py using python3. On Linux you can
+do that by typing in terminal:
+
+    python3 run.py
+    
+    But you have to be in the correct folder. So right-click on the folder and
+choose "Open Folder In Terminal". And if this option does not exists. You can
+either change folder from the the terminal using cd:
+
+    cd folder-name
+    
+    Or by typing the full path of the file:
+    
+    python3 /home/username/folder/VCStudio/run.py
+    
+    
+    
+    
+    
+[ РУССКИЙ ]
+
+    Для запуска VCStudio вам нужно открыть файл run.py в приложении python3. В
+операционных системах Linux вы это можете сделать написав в терминал:
+
+    python3 run.py
+    
+    Но вам нужно быть в правельной папке. Это можно сделать нажав правой кнопкой
+по папке и выбрать "Открыть Папаку В Терминале". Или если похожей функции нет
+в вашем файл-браузере. Вы можете либо поменять папку в терминале испульзуя cd:
+
+    cd имя-папки
+    
+    Или написав полное имя файла.
+    
+    python3 /home/имя-пользователя/папка/VCStudio/run.py
+    
+    
+    
+    
