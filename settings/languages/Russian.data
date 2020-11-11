@@ -1,4 +1,8 @@
 []
 checkingpythonmodules = [Проверка модулей PYTHON]
+checkingpartsoftheprogramm = [Проверка VCStudio...]
 checked = [Хорошо]
 failed = [Провал]
+missingmoduleserror = [Ошибок найденно. Наберите Fix чтобы начать починку.]
+missingmodulenotification = [Ошибка загрузки модулей. См. консоль для деталей.]
+imissedyouwelcommessage = [:) Приятно видить вас.]

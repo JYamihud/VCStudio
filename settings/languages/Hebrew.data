@@ -1,4 +1,8 @@
 []
 checkingpythonmodules = [PYTHON בודק מודולי ...]
+checkingpartsoftheprogramm = [ VCStudio בודק...]
 checked = [בסדר]
 failed = [נכשל]
+missingmoduleserror = [ - כדי לנסות לתקן .שגיאות נמצאו Fix הקלד. ]
+missingmodulenotification = [שגיאת מודולים. חפש פרטים בקונסולה]
+imissedyouwelcommessage = [:) אני שמח לראותך.]

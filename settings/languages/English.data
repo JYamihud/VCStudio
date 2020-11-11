@@ -1,4 +1,8 @@
 []
 checkingpythonmodules = [Checking PYTHON modules...]
+checkingpartsoftheprogramm = [Checking VCStudio...]
 checked = [Checked]
 failed = [Failed]
+missingmoduleserror = [Errors found. Type Fix to attempt fixing.]
+missingmodulenotification = [Module error. Look into the console for details.]
+imissedyouwelcommessage = [:) I'm happy to see you.]
