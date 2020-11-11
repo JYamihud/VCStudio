@@ -1,3 +1,5 @@
+![BLENDER-ORGANIZER](icon.png)
+
 # VCStudio
 
 New And Improved Movie Creation Tool, Based on [Blender Organizer](https://github.com/JYamihud/blender-organizer).
