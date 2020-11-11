@@ -9,7 +9,7 @@ It became such a hard thing to make work on a new system. Since Python2 is not l
 
 The Blender Organizer also had some questionable desing elements that made it hard to implement new feratures and settings without clusterring the project folder. And also it had a wierd way of handinling multiple projects.
 
-## Blender Organizer will still lives.
+## Blender Organizer still lives.
 I think for most people who are Using the Blender Organizer. To switch to an untested new project would be a terrible thing. This is why I'm not using the Blender Organizer repository for the rewrite, but instead choosing to create this new one. Which gonna go away from being named after Blender but more after the little studio title we have for our animation project. VCS (Violence, Children, Studio).
 
 Few VCS projects just as [I'm Not Even Human](https://open.lbry.com/@VCS:7/Imnotevenhumanshortfilm:3?r=HnvEmZbrkAHCcWf7PDVzShfp4xafcBMW) and [The Package, The Car & The Time Is Running Out](https://open.lbry.com/@VCS:7/ThePackageTheCarAndTheTimeIsRunningOut:3?r=HnvEmZbrkAHCcWf7PDVzShfp4xafcBMW) were made using the Old Blender Organizer. 
