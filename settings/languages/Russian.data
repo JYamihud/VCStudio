@@ -1,0 +1,4 @@
+[]
+checkingpythonmodules = [Проверка модулей PYTHON]
+checked = [Хорошо]
+failed = [Провал]
