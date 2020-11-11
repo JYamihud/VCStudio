@@ -7,6 +7,7 @@ w, h = os.get_terminal_size()
 
 from settings import settings
 from settings import talk
+from troubleshooter import fix
 
 def cls():
     #cleaning the terminal
@@ -30,6 +31,8 @@ def output(form, text=""):
 # COFIGURING LANGUAGE
 def lang_setting():
     
+    
+    
     title = "TYPE YOUR LANGUAGE AND HIT ENTER"
     
     while True:
@@ -45,6 +48,8 @@ def lang_setting():
             return
         except:
             pass
+        
+        talk.allert("Select Language. Look in console.")
         
         # Getting list of available languages
         all_langs = os.listdir("settings/languages/")
@@ -107,106 +112,141 @@ lang_setting()
 
 
 
-def modules_test():
+def modules_test(Modules, title, setting):
     
     
     # TESTING THAT MODULES ARE INSTALLED CORRECTLY
     
-    if not settings.read("Installed"):
+    
+        
+    cls()
+    
+    import time  # IK it's crazy but user needs to understand what's
+                 # going on. So there be some delay between them.
+    
+    
+    
+    
+    title = talk.text(title)
+        
+    
+    def drawmodules():
         
         cls()
         
-        import time  # IK it's crazy but user needs to understand what's
-                     # going on. So there be some delay between them.
         
-        Modules = {
-        "os":None,
-        "gi":None,
-        "gi.repository.Gtk":None,
-        "cairo":None,
-        "PIL":None,
-        "PIL.Image":None, 
-        "subprocess":None,
-        "datetime":None,
-        "sys":None,
-        "urllib":None,
-        "urllib3":None,
-        "socket":None
-        }
+        output("\033[1;44m")
+    
+        output("\033[1;44m", \
+        " " * int((w-len(title))/2) \
+        + title + \
+        " " * int((w-len(title))/2) \
+        )
         
+        output("\033[1;44m")
         
-        title = talk.text("checkingpythonmodules")
-            
+        for raws in range(int((h-5-len(Modules))/2)):
+            output("\033[1;40m")
         
-        def drawmodules():
-            
-            cls()
-            
-            
-            output("\033[1;44m")
+        for mod2 in Modules:
         
-            output("\033[1;44m", \
-            " " * int((w-len(title))/2) \
-            + title + \
-            " " * int((w-len(title))/2) \
-            )
-            
-            output("\033[1;44m")
-            
-            for raws in range(int((h-5-len(Modules))/2)):
-                output("\033[1;40m")
-            
-            for mod2 in Modules:
-            
-                if Modules[mod2] == None:
-                    
-                    ans = mod2
-                        
-                    output("\033[1;40m", " "+ans)
+            if Modules[mod2] == None:
                 
-                elif Modules[mod2] == True:
-                    ans = mod2 + " "*int(w/2-len(mod2)) + talk.text("checked")
-                        
-                    output("\033[1;42m", " "+ans)
-                else:
+                ans = mod2
                     
-                    ans = mod2 + " "*int(w/2-len(mod2)) + talk.text("failed")
-                        
-                    output("\033[1;41m", " "+ans)
-                    
-            for raws in range(int((h-5-len(Modules))/2)):
-                output("\033[1;40m")
-        
-        
-        for mod in Modules:
+                output("\033[1;40m", " "+ans)
             
-            drawmodules()
+            elif Modules[mod2] == True:
+                ans = mod2 + " "*int(w/2-len(mod2)) + talk.text("checked")
+                    
+                output("\033[1;42m", " "+ans)
+            else:
                 
-            try:
-                try:
+                ans = mod2 + " "*int(w/2-len(mod2)) + talk.text("failed")
                     
-                    exec( "import " + mod)
-                    Modules[mod] = True
-                    
-                except:
-                    Modules[mod] = False
-                    
-                    
-            except:
-                pass
-            time.sleep(0.1)        
-            
+                output("\033[1;41m", " "+ans)
                 
+                
+        for raws in range(int((h-6-len(Modules))/2)):
+            output("\033[1;40m")
+    
+    errors = 0
+    for mod in Modules:
+        
         drawmodules()
+            
+        try:
+            try:
+                
+                exec( "import " + mod)
+                Modules[mod] = True
+                
+            except:
+                Modules[mod] = False
+                errors = errors + 1
+                
+        except:
+            pass
+        time.sleep(0.1)        
         
+            
+    drawmodules()
+    
+    if errors:
+        
+        talk.allert(talk.text("missingmodulenotification"))
+        
+        title = str(errors)+" "+talk.text("missingmoduleserror")
+    
+        output("\033[1;40m\033[1;31m", \
+        " " * int((w-len(title))/2) \
+        + title + \
+        " " * int((w-len(title))/2) \
+        )
+        
+        #fix thing
         print("\033[1;m")
+        command = input()
+        
+        if command == "Fix":
+            fix.autofix(Modules)
+    
+    else:
+        #if no errors
+        settings.write(setting, "Checked-by-troubleshooter")
+        
+    print("\033[1;m")
         
 
-modules_test()
+if not settings.read("Python-is-good"):
 
+    Modules = {
+            "os":None,
+            "gi":None,
+            "gi.repository.Gtk":None,
+            "cairo":None,
+            "PIL":None,
+            "PIL.Image":None, 
+            "subprocess":None,
+            "datetime":None,
+            "sys":None,
+            "urllib":None,
+            "urllib3":None,
+            "socket":None
+            }
 
+    modules_test(Modules, "checkingpythonmodules", "Python-is-good")
 
+if not settings.read("VCStudio-is-good"):
 
+    OwnModules = {
+            "settings.settings":None,
+            "settings.talk":None,
+            "troubleshooter.troubleshooter":None,
+            "troubleshooter.fix":None
+            }
+
+    modules_test(OwnModules, "checkingpartsoftheprogramm", "VCStudio-is-good")
 
 
 
