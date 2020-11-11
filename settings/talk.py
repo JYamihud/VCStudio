@@ -2,7 +2,7 @@
 # PYTHON 3
 
 # this file handles language
-
+import os
 from settings import settings
 
 def text(var):
@@ -18,3 +18,7 @@ def text(var):
             return line.replace("\n"+var+" = [", "")
     
     return "!Missing! "+var
+
+def allert(message):
+    
+    os.system("notify-send -i "+os.getcwd()+'/tinyicon.png "VCStudio" "'+message+'"')

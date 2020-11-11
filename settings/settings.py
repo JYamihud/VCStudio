@@ -15,7 +15,6 @@ def read(setting):
     return False
 
 def write(setting, value):
-    print(setting, value)
     
     
     #opening the file
