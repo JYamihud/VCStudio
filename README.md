@@ -18,6 +18,8 @@ The current Moria's Race project is now using the old one. But since it's a rela
 
 ## Plans
 
+[Projects Page](https://github.com/JYamihud/VCStudio/projects)
+
 - [x] Build a terminal based application for checking the VCStudio installation. (troubleshooter)
 - [ ] Build a automatic fixer to the troubleshooter.
 - [ ] Build a terminal based manager for creating new projects / installing software / and configuring settings.
