@@ -1,0 +1,18 @@
+VERSION 0.0
+
+run.py
+icon.png
+tinyicon.png
+HELP.txt
+troubleshooter/troubleshooter.py
+troubleshooter/fix.py
+settings/languages/Dumbass.data
+settings/languages/English.data
+settings/languages/Hebrew.data
+settings/languages/Russian.data
+settings/settings.py
+settings/talk.py
+settings/update.data
+project_manager/pm_console.py
+
+[https://github.com/JYamihud/VCStudio]

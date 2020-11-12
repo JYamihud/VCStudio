@@ -19,6 +19,6 @@ def text(var):
     
     return "!Missing! "+var
 
-def allert(message):
+def alert(message):
     
     os.system("notify-send -i "+os.getcwd()+'/tinyicon.png "VCStudio" "'+message+'"')
