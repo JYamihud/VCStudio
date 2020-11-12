@@ -49,7 +49,7 @@ def lang_setting():
         except:
             pass
         
-        talk.allert("Select Language. Look in console.")
+        talk.alert("Select Language. Look in console.")
         
         # Getting list of available languages
         all_langs = os.listdir("settings/languages/")
@@ -194,7 +194,7 @@ def modules_test(Modules, title, setting):
     
     if errors:
         
-        talk.allert(talk.text("missingmodulenotification"))
+        talk.alert(talk.text("missingmodulenotification"))
         
         title = str(errors)+" "+talk.text("missingmoduleserror")
     
@@ -243,7 +243,8 @@ if not settings.read("VCStudio-is-good"):
             "settings.settings":None,
             "settings.talk":None,
             "troubleshooter.troubleshooter":None,
-            "troubleshooter.fix":None
+            "troubleshooter.fix":None,
+            "project_manager.pm_console":None, 
             }
 
     modules_test(OwnModules, "checkingpartsoftheprogramm", "VCStudio-is-good")
