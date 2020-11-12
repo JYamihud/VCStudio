@@ -6,3 +6,24 @@ failed = [Failed]
 missingmoduleserror = [Errors found. Type Fix to attempt fixing.]
 missingmodulenotification = [Module error. Look into the console for details.]
 imissedyouwelcommessage = [:) I'm happy to see you.]
+PMConsoleExplanation = [
+   This is a console version of the VCStudio's Project-Manager. You have been
+launched in this version because our troubleshooter can't find some critical
+module to enable graphical interface. Also you can enter this mode manually
+using -c.
+    
+    Keep in mind that console mode is limited in functionality and is used only
+for most notoroius reasons.
+
+    Type help to get available functions.]
+pm_console_help = [
+
+help          - This help dialogue.
+set_language  - changes language settings.
+projects_list - see projects list.
+new_project   - creates a new project.
+project       - launch a given project.
+scan          - scans systems for VCStudio or Blender-Organizer projects.
+convert       - convert Blender-Organizer project to VCStudio project. (Please have a back up when using this one.)
+exit          - exits.
+]

@@ -6,3 +6,23 @@ failed = [נכשל]
 missingmoduleserror = [ - כדי לנסות לתקן .שגיאות נמצאו Fix הקלד. ]
 missingmodulenotification = [שגיאת מודולים. חפש פרטים בקונסולה]
 imissedyouwelcommessage = [:) אני שמח לראותך.]
+PMConsoleExplanation = [
+    זו גרסת קונסולה. אתה נמצא בגרסה זו מכיוון שאין מודול לממשק גרפי. ניתן גם להיכנס למצב זה באופן ידני
+באמצעות
+-c
+    
+     זכור שמצב הקונסולה מוגבל בפונקציונליות ומשמש רק
+מסיבות הנוטוריאוס ביותר
+
+ help הקלד לקבלת פונקציות זמינות ]
+pm_console_help = [
+
+help          - עזרה
+set_language  - משנה הגדרות שפה
+projects_list - ראה רשימת פרויקטים
+new_project   - יוצר פרויקט חדש
+project       - לפתיחת פרויקט
+scan          - סורק מערכות לפרויקטים
+convert       - (אנא גבה גיבוי בעת השימוש בזה)  VCStudio לפרויקט Blender-Organizer להמיר פרויקט
+exit          - יציאה
+]
