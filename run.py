@@ -8,5 +8,9 @@ from troubleshooter import troubleshooter
 # Importing various things
 from settings import settings
 from settings import talk
+from project_manager import pm_console
 
-talk.allert(talk.text("imissedyouwelcommessage"))
+talk.alert(talk.text("imissedyouwelcommessage"))
+
+# Project Manager console version
+pm_console.run()
