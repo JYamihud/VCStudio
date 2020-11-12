@@ -35,8 +35,21 @@ def run():
             print("\033[1;32m"+talk.text("pm_console_help")+"\n")
     
         elif command == "set_language":
-            print("\nNot Implemented yet\n")
-        
+            # Getting list of available languages
+            for lang in settings.list_languages():    
+                print("\033[1;35m "+lang)
+            
+            # special input for languages
+            nlang = input("\033[1;33m : ")
+            
+            if nlang in settings.list_languages():
+                settings.write("Language",nlang)
+                print("\033[1;32m"+talk.text("checked"))
+            
+            else:
+                print("\033[1;31m"+talk.text("failed"))
+            
+            
         elif command == "projects_list":
             print("\nNot Implemented yet\n")    
         
