@@ -1,6 +1,7 @@
 # THIS FILE IS A PART OF VCStudio
 # PYTHON 3
 
+import os
 
 def read(setting):
     #opening the file
@@ -40,3 +41,18 @@ def write(setting, value):
         
     
     ndata.close()
+    
+    
+def list_languages():
+    
+    # Getting list of available languages
+    all_langs = os.listdir("settings/languages/")
+    
+    # Filtering all the unnesesary garbage
+    r = []
+    for lang in all_langs:
+        if lang.endswith(".data"):
+            r.append(lang.replace(".data", ""))
+    all_langs = sorted(r)
+    
+    return all_langs
