@@ -52,14 +52,7 @@ def lang_setting():
         talk.alert("Select Language. Look in console.")
         
         # Getting list of available languages
-        all_langs = os.listdir("settings/languages/")
-        
-        # Filtering all the unnesesary garbage
-        r = []
-        for lang in all_langs:
-            if lang.endswith(".data"):
-                r.append(lang.replace(".data", ""))
-        all_langs = sorted(r)
+        all_langs = settings.list_languages()
         
         # Counting them
         len_langs = len(all_langs)
