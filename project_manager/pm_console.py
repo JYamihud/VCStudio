@@ -12,7 +12,10 @@ from project_manager import pm_project
 
 
 # COMPLITTER
-import readline
+try:
+    import readline
+except:
+    pass
 
 commands1 = [
 "help",#          - help dialogue.
