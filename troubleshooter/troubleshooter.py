@@ -225,7 +225,8 @@ if not settings.read("Python-is-good"):
             "sys":None,
             "urllib":None,
             "urllib3":None,
-            "socket":None
+            "socket":None,
+            "readline":None
             }
 
     modules_test(Modules, "checkingpythonmodules", "Python-is-good")
