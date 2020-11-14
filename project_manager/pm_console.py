@@ -8,6 +8,35 @@ w, h = os.get_terminal_size()
 
 from settings import settings
 from settings import talk
+from project_manager import pm_project
+
+
+# COMPLITTER
+import readline
+
+commands1 = [
+"help",#          - help dialogue.
+"set_language",#  - changes language settings.
+"projects_list",# - see projects list.
+"set_folder",#    - set a folder where a new project is created.
+"new_project",#   - creates a new project.
+"project",#       - launch a given project.
+"scan",#          - scans systems for VCStudio or Blender-Organizer projects.
+"convert",#       - convert Blender-Organizer project to VCStudio project. (Please have a back up when using this one.)
+"exit"# 
+]
+commands = commands1.copy()
+
+def completer(text, state):
+    options = [i for i in commands if i.startswith(text)]
+    if state < len(options):
+        return options[state]
+    else:
+        return None
+
+readline.parse_and_bind("tab: complete")
+readline.set_completer(completer)
+
 
 def cls():
     #cleaning the terminal
@@ -16,28 +45,44 @@ def cls():
 def run():
     
     cls()
+    
+    
+    
     print("\033[1;33m\n   VCStudio - Console \n")
     
     print("\033[1;32m"+talk.text("PMConsoleExplanation")+"\n")
     
     
     while True:
+        
+        # making sure Tab is doing autocomlete to the right functions
+        global commands
+        commands = commands1.copy()
+        
         command = input("\033[1;35m : \033[1;m")
         
-        # exit
+        ##############
         
         if command == "exit":
             cls()
             exit()
-    
+        
+        ##############
+        
         elif command == "help":
             
             print("\033[1;32m"+talk.text("pm_console_help")+"\n")
-    
+        
+        ##############
+        
         elif command == "set_language":
             # Getting list of available languages
+            
+            commands = []
             for lang in settings.list_languages():    
                 print("\033[1;35m "+lang)
+                commands.append(lang)
+            
             
             # special input for languages
             nlang = input("\033[1;33m : ")
@@ -48,22 +93,64 @@ def run():
             
             else:
                 print("\033[1;31m"+talk.text("failed"))
+        
+        ##############
+        
+        
+        elif command == "set_folder":
+            if settings.read("New-Project-Folder"): 
+                print("\033[1;35m"+talk.text("Current")+\
+                " : "+settings.read("New-Project-Folder"))
             
+            nfol = input("\033[1;33m : ")
+            if nfol:
+                if os.path.exists(nfol):
+                    settings.write("New-Project-Folder", nfol)
+                else:
+                    print("\033[1;31m"+talk.text("failed"))
+                    
+        ##############
+            
+        elif command == "new_project":
+            if not settings.read("New-Project-Folder"):
+                print("\033[1;33m"+talk.text("pm-do-new-project-error"))
+            
+            #if folder is configured
+            else:
+                nproj = input("\033[1;33m "+talk.text("Name")+" : ")
+                
+                if pm_project.new(nproj):
+                    print("\033[1;32m"+talk.text("checked"))
+                else:
+                    print("\033[1;31m"+talk.text("failed"))
+                
+            
+        ##############
             
         elif command == "projects_list":
-            print("\nNot Implemented yet\n")    
+            # Getting list of available projects
+            for p in pm_project.get_list():    
+                print("\033[1;35m "+p)
         
-        elif command == "new_project":
-            print("\nNot Implemented yet\n")   
+        ##############
         
         elif command == "project":
             print("\nNot Implemented yet\n") 
         
+        ##############
+        
         elif command == "scan":
             print("\nNot Implemented yet\n") 
+        
+        ##############
             
         elif command == "convert":
             print("\nNot Implemented yet\n") 
         
+        ## FAIL ##
         
+        elif command != "":
+            print("\033[1;31m"+talk.text("failed"))
+            
+            
     print("\033[1;m") #return terminal to normality
