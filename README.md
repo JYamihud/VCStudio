@@ -22,7 +22,7 @@ The current Moria's Race project is now using the old one. But since it's a rela
 
 - [x] Build a terminal based application for checking the VCStudio installation. (troubleshooter)
 - [ ] Build a automatic fixer to the troubleshooter.
-- [ ] Build a terminal based manager for creating new projects / installing software / and configuring settings.
+- [x] Build a terminal based manager for creating new projects / entering them / and configuring basic settings.
 - [ ] Make a Graphical version of the manager. (Not on every system you have access to graphical interface)
 - [ ] Make a tranlating layer. Or a recofiguration layer. To move old project to the new system.
 - [ ] Make a terminal based VCStudio with all the features of the organizer.
