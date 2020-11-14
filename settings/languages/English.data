@@ -32,3 +32,4 @@ pm-do-new-project-error = [You didn't specify folder where to create a project.
 Use set_folder to specify it.]
 Current = [Current]
 Name = [Name]
+Wait = [Wait]
