@@ -20,9 +20,19 @@ pm_console_help = [
 help          - עזרה
 set_language  - משנה הגדרות שפה
 projects_list - ראה רשימת פרויקטים
+set_folder    - הגדר תיקיה שבה נוצר פרויקט חדש
 new_project   - יוצר פרויקט חדש
 project       - לפתיחת פרויקט
 scan          - סורק מערכות לפרויקטים
 convert       - (אנא גבה גיבוי בעת השימוש בזה)  VCStudio לפרויקט Blender-Organizer להמיר פרויקט
 exit          - יציאה
 ]
+pm-do-new-project-error = [לא ציינת תיקיה היכן ליצור פרויקט.
+ set_folder כדי לציין אותה. השתמש ב]
+Current = [עכשוי]
+Name = [שם]
+
+
+
+
+

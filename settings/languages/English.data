@@ -1,7 +1,7 @@
 []
 checkingpythonmodules = [Checking PYTHON modules...]
 checkingpartsoftheprogramm = [Checking VCStudio...]
-checked = [Checked]
+checked = [Okay]
 failed = [Failed]
 missingmoduleserror = [Errors found. Type Fix to attempt fixing.]
 missingmodulenotification = [Module error. Look into the console for details.]
@@ -21,9 +21,14 @@ pm_console_help = [
 help          - This help dialogue.
 set_language  - changes language settings.
 projects_list - see projects list.
+set_folder    - set a folder where a new project is created.
 new_project   - creates a new project.
 project       - launch a given project.
 scan          - scans systems for VCStudio or Blender-Organizer projects.
 convert       - convert Blender-Organizer project to VCStudio project. (Please have a back up when using this one.)
 exit          - exits.
 ]
+pm-do-new-project-error = [You didn't specify folder where to create a project.
+Use set_folder to specify it.]
+Current = [Current]
+Name = [Name]
