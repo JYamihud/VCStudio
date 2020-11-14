@@ -17,6 +17,18 @@ def text(var):
         if line.startswith("\n"+var):
             return line.replace("\n"+var+" = [", "")
     
+    #Try English
+    
+    data = open("settings/languages/English.data")
+    data = data.read()
+    data = data.split("]")
+    
+    #finding the keyword
+    for line in data:
+        if line.startswith("\n"+var):
+            return line.replace("\n"+var+" = [", "!")
+    
+    #If Couldn't Find
     return "!Missing! "+var
 
 def alert(message):
