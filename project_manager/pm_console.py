@@ -34,9 +34,11 @@ def completer(text, state):
     else:
         return None
 
-readline.parse_and_bind("tab: complete")
-readline.set_completer(completer)
-
+try:
+    readline.parse_and_bind("tab: complete")
+    readline.set_completer(completer)
+except:
+    print("NO TABS, SORRY!")
 
 def cls():
     #cleaning the terminal
