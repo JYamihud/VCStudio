@@ -1,0 +1,6 @@
+testing_banner = 1,1,1,0.5
+LMB = 1,0,0,1
+MMB = 0,1,0,1
+RMB = 0,0,1,1
+testing_text = 0,0,0,1
+background = 0.2,0.2,0.2,1
