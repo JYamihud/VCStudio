@@ -79,3 +79,49 @@ def get_list():
         pass
         
     return ret
+
+
+def scan():
+    
+    ret = []
+    
+    #scan the system for "ast/chr" a folder that accurs in a project
+    for i in [x[0] for x in os.walk("/")]:
+        if i.endswith("/ast/chr"):
+            ret.append(i.replace("/ast/chr", ""))
+            register_project(i.replace("/ast/chr", ""))
+    
+    return ret
+    
+def load(path):
+    
+    #first let's figure out if it's an old Blender-Organizer
+    #or a new VCStudio project.
+    
+    #if new
+    if os.path.exists(path+"/set"):
+        print(" Not Yet Implemented VCStudio ")
+    
+    #old organizer
+    elif os.path.exists(path+"/MAIN_FILE"):
+        n = open(path+"/MAIN_FILE")
+        n = n.read()
+        
+        #let's look if there is python2 since it's legacy software
+        if not os.system("python2 -V") == 0:
+            return "No python2"
+        
+        
+        #loading the python2 thingy
+        sh = open("/tmp/run_legacy_organizer.sh", "w")
+        sh.write("cd "+path+"\n")
+        sh.write("python2 "+n+"\n")
+        sh.write('read -p ""')
+        sh.close()
+        
+        os.system("gnome-terminal -- sh /tmp/run_legacy_organizer.sh")
+        
+        
+       
+    
+    

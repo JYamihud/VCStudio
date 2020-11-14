@@ -135,12 +135,19 @@ def run():
         ##############
         
         elif command == "project":
-            print("\nNot Implemented yet\n") 
+            
+            n = input("\033[1;33m : ")
+            print("\033[1;35m "+talk.text("Wait"))
+            pm_project.load(n)
+            
         
         ##############
         
         elif command == "scan":
-            print("\nNot Implemented yet\n") 
+            print("\033[1;35m "+talk.text("Wait"))
+            for proj in pm_project.scan():
+                print("\033[1;35m "+proj)
+                
         
         ##############
             
