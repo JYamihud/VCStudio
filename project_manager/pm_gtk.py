@@ -20,6 +20,7 @@ from project_manager import pm_project
 # UI modules
 from UI import UI_testing
 from UI import UI_color
+from UI import UI_elements
 
 # OK let's make a window
 def run():
