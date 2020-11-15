@@ -30,28 +30,37 @@ def layer(win):
     #text setting
     layer.select_font_face("Monospace", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_NORMAL)
     
-    # testing will be drawn only it's activated
-    if win.current["testing"]:
-        
-        # Testing top banner thingy
+    # Variables I will need tfor animations
+    testing_bar = UI_elements.animate("UI_testing_banner", win)
+    
+
+    # Testing top banner thingy
+    if testing_bar > 0.01:
         layer.set_source_rgba(1,1,1,0.5)
         UI_elements.roundrect(layer,
-        5,
-        5, 
-        win.current['w']-10,
-        30,
-        10)
-        
+            5,
+            5, 
+            (win.current['w']-10)*testing_bar,
+            30,
+            10)
         layer.fill()
+    
+    # testing will be drawn only it's activated    
+    if win.current["testing"]:
+        
+        #Animating values
+        testing_bar = UI_elements.animate("UI_testing_banner", win, testing_bar, 1, 10, force=True)
+        
+        
         
         # Current Framerate
         UI_color.set(layer, win, "testing_banner")
         UI_elements.roundrect(layer,
-        5,
-        5, 
-        60,
-        30,
-        10)
+            5,
+            5, 
+            60,
+            30,
+            10)
         layer.fill()
         
         UI_color.set(layer, win, "testing_text")
@@ -77,21 +86,21 @@ def layer(win):
             else:
                 UI_color.set(layer, win, "testing_banner")
             UI_elements.roundrect(layer,
-            75 + (35 * n),
-            5, 
-            30,
-            30,
-            10)
+                75 + (35 * n),
+                5, 
+                30,
+                30,
+                10)
             layer.fill()
     
         # Keyboard
         UI_color.set(layer, win, "testing_banner")
         UI_elements.roundrect(layer,
-        185,
-        5, 
-        30,
-        30,
-        10)
+            185,
+            5, 
+            30,
+            30,
+            10)
         layer.fill()
         
         UI_color.set(layer, win, "testing_text")
@@ -102,31 +111,36 @@ def layer(win):
         for n, key in  enumerate(win.current["keys"]):
             UI_color.set(layer, win, "testing_banner")
             UI_elements.roundrect(layer,
-            220 + (80 * n),
-            5, 
-            75,
-            30,
-            10)
+                220 + (80 * n),
+                5, 
+                75,
+                30,
+                10)
             layer.fill()
             
             UI_color.set(layer, win, "testing_text")
             layer.set_font_size(20)
             layer.move_to(225 + (80 * n),27)
             layer.show_text(str(key))
-        
+    
+    else: # if not testing bar
+        # Animating back to 0
+        testing_bar = UI_elements.animate("UI_testing_banner", win, testing_bar, 0,  10, force=True)
+         
     # Switch to activate testing (or diactivate it). Top, Right corner.
     if  win.current['mx'] in range(win.current['w']-35, win.current['w']) \
     and win.current['my'] in range(5, 35) :
         UI_color.set(layer, win, "testing_banner")
         UI_elements.roundrect(layer,
-        win.current['w'] - 35,
-        5, 
-        30,
-        30,
-        10)
+            win.current['w'] - 35,
+            5, 
+            30,
+            30,
+            10)
         layer.fill()
         
         # Mouse Click
         if win.current["LMB"] and not win.previous["LMB"]:
             win.current["testing"] = not win.current["testing"]
+    
     return surface
