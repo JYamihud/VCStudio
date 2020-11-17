@@ -16,6 +16,7 @@ import cairo
 from settings import settings
 from settings import talk
 from project_manager import pm_project
+from project_manager import pm_mainLayer
 
 # UI modules
 from UI import UI_testing
@@ -34,6 +35,7 @@ def run():
     win.maximize()
     win.connect("destroy", Gtk.main_quit)
     win.set_title("VCStudio : "+talk.text("project-manager"))
+    win.set_default_icon_from_file("tinyicon.png")
     
     # Setting up the events ( mouse and keyboard handling )
     win.connect("button-press-event", mouse_button_press, win)
@@ -41,14 +43,18 @@ def run():
     win.connect("key-press-event", key_press, win)
     win.connect("key-release-event", key_release, win)
     
+
+    
     # Setting up the global variables. (kinda)
     win.animations = {}
     win.previous   = {}
     win.current    = {}
+    win.images     = {}
     win.FPS        = 0
     
     # Cashed tables
-    win.color = UI_color.get_table()
+    win.color    = UI_color.get_table()
+    win.settings = settings.load_all()
     
     # Default values
     win.current["frame"]   = 0
@@ -62,9 +68,10 @@ def run():
     
     # Setting the drawable
     pmdraw = Gtk.DrawingArea()
-    pmdraw.set_size_request(300, 300)
+    pmdraw.set_size_request(815, 500)
     win.add(pmdraw)
     pmdraw.connect("draw", pmdrawing, win)
+    pmdraw.connect("scroll-event", scroll_event, win)
     
     #run
     win.show_all()
@@ -105,10 +112,21 @@ def pmdrawing(pmdrawing, main_layer, win):
     win.current['h'])
     main_layer.fill()
     
+    # Tooltips and other junk has to be defined here. And then drawn later to 
+    # the screen. So here we get a special layer. That will be drawn to during
+    # the time of drawing. And later composeted over everything. 
+    
+    win.tooltip_surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, win.current['w'],
+                                                                  win.current['h'])
+    win.tooltip = cairo.Context(win.tooltip_surface)
+    win.tooltip.select_font_face("Monospace", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_NORMAL)
+    
+    
     # Layers. Order of them matter
     Layers = []
+    Layers.append(pm_mainLayer.layer(win))
     Layers.append(UI_testing.layer(win))
-    
+    Layers.append(win.tooltip_surface)
     
     # Combining layers
     for layer in Layers:
@@ -179,4 +197,8 @@ def key_release(widget, event, win):
     except:
         win.current["keys"] = []
     
-    
+# Now I'm going to attempt to make a functional scroll. IDK because it was a 
+# very long thing to do.
+
+def scroll_event(widget, event, win):
+    print ("Works")
