@@ -37,13 +37,13 @@ def layer(win):
     # Testing top banner thingy
     if testing_bar > 0.01:
         layer.set_source_rgba(1,1,1,0.5)
-        UI_elements.roundrect(layer,
+        UI_elements.roundrect(layer, win,
             5,
             5, 
             (win.current['w']-10)*testing_bar,
             30,
             10)
-        layer.fill()
+        
     
     # testing will be drawn only it's activated    
     if win.current["testing"]:
@@ -55,13 +55,13 @@ def layer(win):
         
         # Current Framerate
         UI_color.set(layer, win, "testing_banner")
-        UI_elements.roundrect(layer,
+        UI_elements.roundrect(layer, win,
             5,
             5, 
             60,
             30,
             10)
-        layer.fill()
+        
         
         UI_color.set(layer, win, "testing_text")
         layer.set_font_size(20)
@@ -85,23 +85,23 @@ def layer(win):
                 
             else:
                 UI_color.set(layer, win, "testing_banner")
-            UI_elements.roundrect(layer,
+            UI_elements.roundrect(layer, win,
                 75 + (35 * n),
                 5, 
                 30,
                 30,
                 10)
-            layer.fill()
+            
     
         # Keyboard
         UI_color.set(layer, win, "testing_banner")
-        UI_elements.roundrect(layer,
+        UI_elements.roundrect(layer, win,
             185,
             5, 
             30,
             30,
             10)
-        layer.fill()
+        
         
         UI_color.set(layer, win, "testing_text")
         layer.set_font_size(20)
@@ -110,13 +110,13 @@ def layer(win):
         
         for n, key in  enumerate(win.current["keys"]):
             UI_color.set(layer, win, "testing_banner")
-            UI_elements.roundrect(layer,
+            UI_elements.roundrect(layer, win,
                 220 + (80 * n),
                 5, 
                 75,
                 30,
                 10)
-            layer.fill()
+            
             
             UI_color.set(layer, win, "testing_text")
             layer.set_font_size(20)
@@ -128,19 +128,20 @@ def layer(win):
         testing_bar = UI_elements.animate("UI_testing_banner", win, testing_bar, 0,  10, force=True)
          
     # Switch to activate testing (or diactivate it). Top, Right corner.
-    if  win.current['mx'] in range(win.current['w']-35, win.current['w']) \
-    and win.current['my'] in range(5, 35) :
-        UI_color.set(layer, win, "testing_banner")
-        UI_elements.roundrect(layer,
-            win.current['w'] - 35,
-            5, 
-            30,
-            30,
-            10)
-        layer.fill()
-        
+    def do():   
         # Mouse Click
-        if win.current["LMB"] and not win.previous["LMB"]:
-            win.current["testing"] = not win.current["testing"]
+        win.current["testing"] = not win.current["testing"]
+    
+    UI_color.set(layer, win, "testing_banner")
+    UI_elements.roundrect(layer, win,
+        win.current['w'] - 35,
+        5, 
+        30,
+        30,
+        10,
+        do,
+        tip=talk.text("UI_testing_tooltip"))
+    
+    
     
     return surface

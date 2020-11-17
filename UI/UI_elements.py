@@ -16,25 +16,66 @@ import cairo
 from settings import settings
 from settings import talk
 
-def roundrect(layer, x, y, width, height, r):
+# UI
+from UI import UI_color
+
+def roundrect(layer, win, x, y, width, height, r, button=False, icon=False, 
+              tip="", fill=True):
     
     # This function draws a rectangle with rounded edges.
     
-    # Making sure that round rectangle will not be smaller then it's roundness
-    # Also you could use it as a cirle by putting height and width to 0
-    if width < r*2:
-        width = r*2
-    if height < r*2:
-        height = r*2
+    # A button variable is a calable for the button action. Basically it's a
+    # function. Roundrect will act as a button.
+    if button:
+        if  win.current['mx'] in range(x, x+width) \
+        and win.current['my'] in range(y, y+height) :
+            do = True
+            
+            # If holding click
+            if win.current["LMB"]:
+                UI_color.set(layer, win, "button_clicked")
+            else:
+                UI_color.set(layer, win, "button_active")
+            # If clicked
+            if win.previous["LMB"] and not win.current["LMB"]:
+                button()
+            
+            # Button might have a tooltip as well
+            if tip:
+                tooltip(win, tip)
+        
+        else:
+            do = False
+        
+        
+        
+    else:
+        do = True
     
-    # actuall drawing
-    layer.move_to(x,y)
-    layer.arc(x+r, y+r, r, math.pi, 3*math.pi/2)
-    layer.arc(x+width-r, y+r, r, 3*math.pi/2, 0)
-    layer.arc(x+width-r, y+height-r, r, 0, math.pi/2)
-    layer.arc(x+r, y+height-r, r, math.pi/2, math.pi)
-    layer.close_path()
-
+    if do:
+        # Making sure that round rectangle will not be smaller then it's roundness
+        # Also you could use it as a cirle by putting height and width to 0
+        if width < r*2:
+            width = r*2
+        if height < r*2:
+            height = r*2
+        
+        # actuall drawing
+        layer.move_to(x,y)
+        layer.arc(x+r, y+r, r, math.pi, 3*math.pi/2)
+        layer.arc(x+width-r, y+r, r, 3*math.pi/2, 0)
+        layer.arc(x+width-r, y+height-r, r, 0, math.pi/2)
+        layer.arc(x+r, y+height-r, r, math.pi/2, math.pi)
+        layer.close_path()
+        if fill:
+            layer.fill()
+    
+    # Icon is a continuation of the button part. Because you need a way to see
+    # that that the button is even there to begin with.
+    if icon:
+        image(layer, win, "settings/themes/"\
+        +win.settings["Theme"]+"/icons/"+icon+".png", x, y)
+    
 def animate(name, win, v1=0, v2=None, time=10, force=False):
     
     # This function will make animating values over time possible. For smooth
@@ -86,7 +127,13 @@ def blur(surface, win, amount):
     if amount == 0:
         return surface
     
-    if True:   #toblur:
+    # Setting up initial Blur
+    if not "Blur" in win.settings:
+        settings.write("Blur", True)       # Writing to file
+        win.settings = settings.load_all() # Loading file back to RAM
+    
+    # If to active blur. Will be changed in the graphics settings. 
+    if win.settings["Blur"]:
         # scaling down
         surface1 = cairo.ImageSurface(cairo.FORMAT_ARGB32, win.current['w'],
                                                            win.current['h'])
@@ -110,4 +157,82 @@ def blur(surface, win, amount):
         return surface2
     else:
         return surface
+
+def image(layer, win ,path, x, y):
+    
+    # This module will handle drawing images to the layers. It's not that hard
+    # to do in cairo by default. But i'm doing it at every frame. And so it
+    # means a system of images should exist to take out the load. Basically
+    # it will make sure the images is loaded only ones. And for the next draw
+    # calls it will forward the old image.
+    
+    # If image still not loaded
+    if path not in win.images:
+        # Loading the image into the cairo.
+        try:
+            imagesurface = cairo.ImageSurface.create_from_png(path)
+        except:
+            imagesurface = cairo.ImageSurface(cairo.FORMAT_ARGB32, 10, 10)
         
+        # Saving it into the win.images
+        win.images[path] = imagesurface
+    
+    #loading it back
+    else:
+        imagesurface = win.images[path]
+    
+    # Writting the image to the screen
+    layer.set_source_surface(imagesurface, x, y)
+    layer.paint()
+
+def tooltip(win, text):
+    
+    layer = win.tooltip
+    
+    # This function draws a tooltip helper window. 
+    
+    # Just in case
+    text = str(text)
+    
+    # Let's get dimantions of the cube first.
+    lines = 0
+    maxletters = 0
+    
+    for line in text.split("\n"):
+        lines += 1
+        
+        if len(line) > maxletters:
+            maxletters = len(line)
+    
+    
+    # Now when we now the mount of lines and the max lenght of a line. We can
+    # start actually drawing something.
+    
+    # Let's try to make so it's not out of the frame.
+    sx = win.current["mx"]
+    sy = win.current["my"]
+    
+    if sx+(maxletters*9)+40 > win.current["w"]:
+        sx -= (maxletters*9)+40
+    if sy+(lines*20)+10 > win.current["h"]:
+        sy -= (lines*20)+10   
+    
+    # Rectangle
+    UI_color.set(layer, win, "node_background")
+    roundrect(layer, win,
+    sx,
+    sy,
+    (maxletters*9)+40,
+    (lines*20)+10,
+    10)
+    
+    
+    # Text it self
+    layer.select_font_face("Monospace", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_NORMAL)
+    layer.set_font_size(15)
+    UI_color.set(layer, win, "text_normal")
+    
+    for num, line in enumerate(text.split("\n")):
+        layer.move_to(sx+20,
+                      sy+20+(20*num) )
+        layer.show_text(line)
