@@ -1,13 +1,28 @@
 # THIS FILE IS A PART OF VCStudio
 # PYTHON 3
 
-
 import os
 w, h = os.get_terminal_size() 
 
 from settings import settings
 from settings import talk
 from troubleshooter import fix
+
+commands = []
+def completer(text, state):
+    options = [i for i in commands if i.startswith(text)]
+    if state < len(options):
+        return options[state]
+    else:
+        return None
+
+try:
+    import readline
+    readline.parse_and_bind("tab: complete")
+    readline.set_completer(completer)
+except:
+    print("NO TABS, SORRY!")
+
 
 def cls():
     #cleaning the terminal
@@ -54,6 +69,12 @@ def lang_setting():
         # Getting list of available languages
         all_langs = settings.list_languages()
         
+        # Make them auto-comelitable
+        global commands
+        commands = []
+        for lang in all_langs:
+            commands.append(lang)
+        
         # Counting them
         len_langs = len(all_langs)
         
@@ -92,7 +113,7 @@ def lang_setting():
         print("\033[1;m")
         
         # Trying to write language setting.
-        command = input()
+        command = input(":")
         if command != "":
             if command not in all_langs:
                 title = "THERE IS NO " + command + " FILE"
@@ -187,6 +208,9 @@ def modules_test(Modules, title, setting):
     
     if errors:
         
+        global commands
+        commands = ["Fix"]
+        
         talk.alert(talk.text("missingmodulenotification"))
         
         title = str(errors)+" "+talk.text("missingmoduleserror")
@@ -199,7 +223,7 @@ def modules_test(Modules, title, setting):
         
         #fix thing
         print("\033[1;m")
-        command = input()
+        command = input(":")
         
         if command == "Fix":
             fix.autofix(Modules)
@@ -217,6 +241,7 @@ if not settings.read("Python-is-good"):
             "os":None,
             "gi":None,
             "gi.repository.Gtk":None,
+            "gi.repository.GLib":None,
             "cairo":None,
             "PIL":None,
             "PIL.Image":None, 
@@ -239,6 +264,12 @@ if not settings.read("VCStudio-is-good"):
             "troubleshooter.troubleshooter":None,
             "troubleshooter.fix":None,
             "project_manager.pm_console":None, 
+            "project_manager.pm_gtk":None,
+            "project_manager.pm_project":None,
+            "project_manager.pm_mainLayer":None,
+            "UI.UI_color":None,
+            "UI.UI_elements":None,
+            "UI.UI_testing":None,
             }
 
     modules_test(OwnModules, "checkingpartsoftheprogramm", "VCStudio-is-good")
