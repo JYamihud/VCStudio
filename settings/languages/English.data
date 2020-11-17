@@ -34,3 +34,13 @@ Current = [Current]
 Name = [Name]
 Wait = [Wait]
 project-manager = [Project - Manager]
+createnewproject_tooltip = [Start a New Project]
+scanforprojects_tooltip = [Scan the OS for existing projects
+both VCStudio and the Blender-Organizer]
+convertoldproject_tooltip = [Convert selected Blender-Organizer
+project into a VCStudio project.]
+pm_internet_tooltip = [Tutorials / Forums
+Other Internet links]
+Update = [Update]
+Settings = [Settings]
+UI_testing_tooltip = [Tougle "UI Testing" Mode]
