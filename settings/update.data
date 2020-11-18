@@ -1,4 +1,4 @@
-VERSION 0.0
+VERSION 20.11
 
 run.py
 icon.png
@@ -14,5 +14,8 @@ settings/settings.py
 settings/talk.py
 settings/update.data
 project_manager/pm_console.py
+project_manager/pm_gtk.py
+project_manager/pm_mainLayer.py
+project_manager/pm_project.py
 
 [https://github.com/JYamihud/VCStudio]
