@@ -11,10 +11,13 @@ if len(sys.argv) > 1 and sys.argv[1] == "-c":
 from settings import settings
 from settings import talk
 
-# The :) I'm Happy To See You
-talk.alert(talk.text("imissedyouwelcommessage"))
 
-try:
+
+try:    
+    
+    # The :) I'm Happy To See You
+    talk.alert(talk.text("imissedyouwelcommessage"))    
+    
     if not console_force:
         # I'm importing it here so it wont give problems on non GTK systems.
         from project_manager import pm_gtk
