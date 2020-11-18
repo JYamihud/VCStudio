@@ -10,6 +10,7 @@ import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 from gi.repository import GLib
+from gi.repository import Gdk
 import cairo
 
 # Own modules
@@ -76,7 +77,7 @@ def layer(win):
     
     
     # Configure
-    if pm_project.is_legacy(win.current["project"]):
+    if win.current["project"] and pm_project.is_legacy(win.current["project"]):
     
         def do():
             print("configure")
@@ -97,6 +98,7 @@ def layer(win):
     # Internet things
     def do():
         print("Internet")
+        os.system("xdg-open https://github.com/JYamihud/VCStudio")
     
     UI_elements.roundrect(layer, win,
         5,
@@ -111,6 +113,7 @@ def layer(win):
     # Update
     def do():
         print("Update")
+        os.system("xdg-open https://github.com/JYamihud/VCStudio")
     
     UI_elements.roundrect(layer, win,
         5,
@@ -125,6 +128,7 @@ def layer(win):
     # Internet things
     def do():
         print("Settings")
+        os.system("xdg-open "+os.getcwd()+"/settings/settings.data")
     
     UI_elements.roundrect(layer, win,
         5,
@@ -183,7 +187,6 @@ def layer(win):
     
     
     
-    
     return surface
     
 def project_node(layer, win, x, y, project):
@@ -214,6 +217,38 @@ def project_node(layer, win, x, y, project):
         fill=False,
         tip=project+Legacytip)
     node.stroke()
+    
+    # If project is selected
+    if win.current["project"] == project and win.previous["project"] == project:
+        UI_color.set(node, win, "button_active")
+        UI_elements.roundrect(node, win,
+            x-5,
+            y-5, 
+            350+10,
+            320+10,
+            20+5,
+            button=False,
+            fill=False
+            )
+        node.stroke()
+        
+        def do():
+            pm_project.load(project)
+            exit()  # Here I might do some kind a setting later
+            
+        UI_elements.roundrect(node, win,
+            x-5,
+            y-5, 
+            350+10,
+            320+10,
+            20+5,
+            button=do,
+            fill=False
+            )
+        
+        # Enter keys
+        if 65293 in win.current["keys"] or 65421 in win.current["keys"]:
+            do()
     
     # This next roundrect will both be the backdrop of the node and both will 
     # clip the node content. All folowing graphics will be drawn clipped to the

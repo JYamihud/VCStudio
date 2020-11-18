@@ -3,6 +3,7 @@
 
 # this file handles language
 import os
+import subprocess
 from settings import settings
 from settings import talk
 
@@ -99,18 +100,20 @@ def load(path):
     #or a new VCStudio project.
     
     #if new
-    if os.path.exists(path+"/set"):
+    if not is_legacy(path):
         print(" Not Yet Implemented VCStudio ")
     
     #old organizer
-    elif os.path.exists(path+"/MAIN_FILE"):
-        n = open(path+"/MAIN_FILE")
-        n = n.read()
+    else:
+        if not os.path.exists(path+"/MAIN_FILE"):
+            n = "blender-organizer"
+        else:
+            n = open(path+"/MAIN_FILE")
+            n = n.read()
         
         #let's look if there is python2 since it's legacy software
         if not os.system("python2 -V") == 0:
             return "No python2"
-        
         
         #loading the python2 thingy
         sh = open("/tmp/run_legacy_organizer.sh", "w")
@@ -119,15 +122,19 @@ def load(path):
         sh.write('read -p ""')
         sh.close()
         
-        os.system("gnome-terminal -- sh /tmp/run_legacy_organizer.sh")
+        if not os.path.exists(path+"/MAIN_FILE"):
+            os.system("gnome-terminal -- sh /tmp/run_legacy_organizer.sh")
+        else:
+            subprocess.Popen(["sh", "/tmp/run_legacy_organizer.sh"])
+    
+        
         
 def is_legacy(project):
     
     # This function checks whether a given project is a Legacy ( Blender -
     # Organizer ) project.
     
-    if not os.path.exists(project+"/set")\
-    and os.path.exists(project+"/MAIN_FILE"):      
+    if not os.path.exists(project+"/set"):      
         return True
     else:
         return False
