@@ -62,7 +62,7 @@ def layer(win):
     
     # Search for projects
     def do():
-        print("search")
+        pm_project.scan()
     
     UI_elements.roundrect(layer, win,
         5,
@@ -76,19 +76,21 @@ def layer(win):
     
     
     # Configure
-    def do():
-        print("configure")
+    if pm_project.is_legacy(win.current["project"]):
     
-    UI_elements.roundrect(layer, win,
-        5,
-        110, 
-        40,
-        40,
-        10,
-        do,
-        "configure_file",
-        talk.text("convertoldproject_tooltip"))
-    
+        def do():
+            print("configure")
+        
+        UI_elements.roundrect(layer, win,
+            5,
+            110, 
+            40,
+            40,
+            10,
+            do,
+            "configure_file",
+            talk.text("convertoldproject_tooltip"))
+        
     
     # Side bar. Last 3. Internet things / Updater / Settings
     
@@ -147,9 +149,17 @@ def layer(win):
         fill=False)
     layer.clip()
     
+    # Setting up scroll for Projects
+    if "pm_scroll" not in win.current:
+        win.current["pm_scroll"] = 0.0
+    
     # Setting up tilling
-    tileY = 0
+    tileY = 0 
     tileX = 0
+    
+    if "pm_main" not in win.scroll:
+        win.scroll["pm_main"] = 0
+    
     for num, project in enumerate(pm_project.get_list()):
         
         
@@ -157,9 +167,22 @@ def layer(win):
             tileY += 330
             tileX = 0
         
-        project_node(layer, win, 60+tileX, 15+tileY, project)
+        project_node(layer, win, 60+tileX, 15+tileY+ win.scroll["pm_main"], project)
         
         tileX += 360
+    
+    UI_elements.scroll_area(layer, win, "pm_main", 
+        50,
+        5, 
+        win.current["w"] - 55,
+        win.current["h"] - 10,
+        tileY+340,
+        bar=True,
+        mmb=True
+        )
+    
+    
+    
     
     return surface
     
@@ -171,9 +194,31 @@ def project_node(layer, win, x, y, project):
     node = cairo.Context(node_surface)
     node.select_font_face("Monospace", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_NORMAL)
     
+    
+    # Before we gonna do clip. Let's put here the logic of the node.
+    def do():
+        print(project)
+        win.current["project"] = project
+    
+    Legacytip = ""
+    if pm_project.is_legacy(project): 
+        Legacytip = "\nLegacy (Blender-Organizer)"
+    node.set_line_width(10)
+    UI_elements.roundrect(node, win,
+        x-5,
+        y-5, 
+        350+10,
+        320+10,
+        20+5,
+        button=do,
+        fill=False,
+        tip=project+Legacytip)
+    node.stroke()
+    
     # This next roundrect will both be the backdrop of the node and both will 
     # clip the node content. All folowing graphics will be drawn clipped to the
     # current roundrect.
+    
     
     UI_color.set(node, win, "node_background")
     UI_elements.roundrect(node, win,
@@ -182,7 +227,7 @@ def project_node(layer, win, x, y, project):
         350,
         320,
         20)
-        
+    
     # Clip
     UI_elements.roundrect(node, win,
         x,
@@ -193,23 +238,35 @@ def project_node(layer, win, x, y, project):
         fill=False)
     node.clip()
     
-    # Top Banner thingy
-    Legacy = True
-    UI_color.set(node, win, "node_badfile")
     
-    # If New ( VCStudio ), and not legacy ( Blender-Organizer )
-    if os.path.exists(project+"/set"): 
+    if os.path.exists(project+"/py_data/banner.png"):
+        UI_elements.image(node, win, project+"/py_data/banner.png",
+        x,y,350,320)
+    else:
+        UI_elements.image(node, win, "icon.png",
+        x,y,350,320)
+   
+    # Top Banner thingy
+    if pm_project.is_legacy(project): 
+        UI_color.set(node, win, "node_badfile")
+    else:
         UI_color.set(node, win, "node_blendfile")
-        Legacy = False
     
     node.rectangle(x,y,350,40)
     node.fill()
     
     # Name of the project
+    nameonly = project[project.rfind("/")+1:]
     UI_color.set(node, win, "text_normal")
     node.set_font_size(20)
-    node.move_to(x+20,y+25)
-    node.show_text(project[project.rfind("/")+1:])
+    node.move_to(x+175-len(nameonly)*12/2,y+25)
+    node.show_text(nameonly)
+    
+    # Bottom widget part
+    UI_color.set(node, win, "node_background")
+    node.rectangle(x,y+250,350,100)
+    node.fill()
+    
     
     # Drawing the Node on the main layer.
     layer.set_source_surface(node_surface, 0,0)

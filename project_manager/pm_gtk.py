@@ -23,6 +23,14 @@ from UI import UI_testing
 from UI import UI_color
 from UI import UI_elements
 
+def previous(win):
+    win.previous = {}
+    for i in win.current:
+        if type(win.current[i]) == list or type(win.current[i]) is dict:
+            win.previous[i] = win.current[i].copy()
+        else:
+            win.previous[i] = win.current[i]
+
 # OK let's make a window
 def run():
     # In the Blender-Organizer I was putting the version into the title. Not cool.
@@ -43,13 +51,21 @@ def run():
     win.connect("key-press-event", key_press, win)
     win.connect("key-release-event", key_release, win)
     
-
+    # Guess what. The entire time on Blender-Organizer 4 ( 2018 -2020 ) and 
+    # few days of trying connecting the scroll event directly to window or to
+    # the drawing area. And just now I finally made it work. BY DOING THIS 
+    # Why scroll event is only on ScrolledWindow ? OMG !!!
+    
+    scroll = Gtk.ScrolledWindow()
+    scroll.connect("scroll-event", scrolling, win)
     
     # Setting up the global variables. (kinda)
     win.animations = {}
     win.previous   = {}
     win.current    = {}
     win.images     = {}
+    win.imageload  = False
+    win.scroll     = {}
     win.FPS        = 0
     
     # Cashed tables
@@ -57,21 +73,29 @@ def run():
     win.settings = settings.load_all()
     
     # Default values
-    win.current["frame"]   = 0
-    win.current["testing"] = False
-    win.current["LMB"]     = False
-    win.current["MMB"]     = False
-    win.current["RMB"]     = False
-    win.current["keys"]    = []
+    win.current["frame"]      = 0
+    win.current["testing"]    = False
+    win.current["LMB"]        = False
+    win.current["MMB"]        = False
+    win.current["RMB"]        = False
+    win.current["keys"]       = []
     win.current["key_letter"] = ""
+    win.current["scroll"]     = [0,0]
+    win.current["project"]    = ""
+    
+    previous(win)
+    
+    # FPS
     win.sFPS = datetime.datetime.now()
     
     # Setting the drawable
     pmdraw = Gtk.DrawingArea()
     pmdraw.set_size_request(815, 500)
-    win.add(pmdraw)
+    scroll.set_size_request(815, 500) # This step is because GTK developers are
+    win.add(scroll)                   # well. A good, nice, people who knows
+    scroll.add_with_viewport(pmdraw)  # what they are doing. Really. 
     pmdraw.connect("draw", pmdrawing, win)
-    pmdraw.connect("scroll-event", scroll_event, win)
+    
     
     #run
     win.show_all()
@@ -138,13 +162,10 @@ def pmdrawing(pmdrawing, main_layer, win):
     # doing here. Basically trying to avoid current and previous data to be links
     # of the same data.
     
-    win.previous = {}
-    for i in win.current:
-        if type(win.current[i]) == list or type(win.current[i]) is dict:
-            win.previous[i] = win.current[i].copy()
-        else:
-            win.previous[i] = win.current[i]
-    
+    previous(win) # Moved it into a seprate function for obvoius reasons
+            
+    # Refreshing those that need to be refrashed
+    win.current["scroll"] = [0,0]
     
     # Refreshing the frame automatically
     pmdrawing.queue_draw()
@@ -197,8 +218,7 @@ def key_release(widget, event, win):
     except:
         win.current["keys"] = []
     
-# Now I'm going to attempt to make a functional scroll. IDK because it was a 
-# very long thing to do.
-
-def scroll_event(widget, event, win):
-    print ("Works")
+def scrolling(widget, event, win):
+    e, x, y = event.get_scroll_deltas()
+    win.current["scroll"] = [x,y]
+    

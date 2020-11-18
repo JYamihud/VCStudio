@@ -121,7 +121,15 @@ def load(path):
         
         os.system("gnome-terminal -- sh /tmp/run_legacy_organizer.sh")
         
-        
-       
+def is_legacy(project):
+    
+    # This function checks whether a given project is a Legacy ( Blender -
+    # Organizer ) project.
+    
+    if not os.path.exists(project+"/set")\
+    and os.path.exists(project+"/MAIN_FILE"):      
+        return True
+    else:
+        return False
     
     
