@@ -10,7 +10,9 @@ import math
 import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
+from gi.repository import Gdk
 from gi.repository import GLib
+from gi.repository import GdkPixbuf
 import cairo
 
 # Own modules
@@ -203,8 +205,23 @@ def image(layer, win ,path, x, y, width=0, height=0, fit="crop"):
                 
                 # Loading the image into the cairo.
                 try:
-                    loadimage = cairo.ImageSurface.create_from_png(path)
-                    
+                    # It could be not PNG
+                    try:
+                        loadimage = cairo.ImageSurface.create_from_png(path)
+                    except:
+                        # If it's not png it's gonna take few steps
+                        
+                        # First we need to make a pixbuf. 
+                        load1 = GdkPixbuf.Pixbuf.new_from_file(path)
+                        Px = load1.get_width()
+                        Py = load1.get_height()
+                        
+                        # Then to convert the pixbuf to a cairo surface
+                        loadimage = cairo.ImageSurface(cairo.FORMAT_ARGB32, Px, Py)
+                        imagedraw = cairo.Context(loadimage)
+                        Gdk.cairo_set_source_pixbuf( imagedraw, load1, 0, 0)
+                        imagedraw.paint()
+                        
                     # If I want to resize the image for an icon or something. There is            
                     # gonna be the folowing algorythm.
                     
@@ -212,6 +229,7 @@ def image(layer, win ,path, x, y, width=0, height=0, fit="crop"):
                         
                         dx = 0
                         dy = 0
+                        
                         
                         imagesurface = cairo.ImageSurface(cairo.FORMAT_ARGB32, width, height)
                         imagedraw = cairo.Context(imagesurface)
