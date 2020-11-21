@@ -28,7 +28,8 @@ try:
         pm_console.run()
     
 
-except:
+except Exception:
+    raise()
     # If some mistake happened
 
     # Testing the software
