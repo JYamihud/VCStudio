@@ -8,7 +8,6 @@ troubleshooter/troubleshooter.py
 troubleshooter/fix.py
 settings/languages/Dumbass.data
 settings/languages/English.data
-settings/languages/Hebrew.data
 settings/languages/Russian.data
 settings/settings.py
 settings/talk.py
@@ -17,5 +16,21 @@ project_manager/pm_console.py
 project_manager/pm_gtk.py
 project_manager/pm_mainLayer.py
 project_manager/pm_project.py
+project_manager/pm_newprojectLayer.py
+project_manager/scanLayer.py
+UI/UI_color.py
+UI/UI_elements.py
+UI/UI_testing.py
+settings/themes/Default/theme.data
+settings/themes/Default/icons/cancel.png
+settings/themes/Default/icons/configure_file.png
+settings/themes/Default/icons/folder.png
+settings/themes/Default/icons/internet.png
+settings/themes/Default/icons/new_file.png
+settings/themes/Default/icons/ok.png
+settings/themes/Default/icons/quenstion.png
+settings/themes/Default/icons/search_file.png
+settings/themes/Default/icons/settings.png
+settings/themes/Default/icons/update.png
 
 [https://github.com/JYamihud/VCStudio]
