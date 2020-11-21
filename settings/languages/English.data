@@ -2,6 +2,7 @@
 checkingpythonmodules = [Checking PYTHON modules...]
 checkingpartsoftheprogramm = [Checking VCStudio...]
 checked = [Okay]
+cancel = [Cancel]
 failed = [Failed]
 missingmoduleserror = [Errors found. Type Fix to attempt fixing.]
 missingmodulenotification = [Module error. Look into the console for details.]
@@ -39,8 +40,12 @@ scanforprojects_tooltip = [Scan the OS for existing projects
 both VCStudio and the Blender-Organizer]
 convertoldproject_tooltip = [Convert selected Blender-Organizer
 project into a VCStudio project.]
-pm_internet_tooltip = [Tutorials / Forums
+pm_internet_tooltip = [Help / About / Tutorials / Forums
 Other Internet links]
 Update = [Update]
 Settings = [Settings]
 UI_testing_tooltip = [Tougle "UI Testing" Mode]
+pm_new_project_folder_tooltip = [Choose where on the system to
+create the project's folder.]
+new_project_name = [New Project Name]
+duringscanningforprojects = [Scanning the OS, wait...]

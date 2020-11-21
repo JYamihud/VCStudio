@@ -2,6 +2,7 @@
 checkingpythonmodules = [Проверка модулей PYTHON]
 checkingpartsoftheprogramm = [Проверка VCStudio...]
 checked = [Хорошо]
+cancel = [Отмена]
 failed = [Провал]
 missingmoduleserror = [Ошибок найденно. Наберите Fix чтобы начать починку.]
 missingmodulenotification = [Ошибка загрузки модулей. См. консоль для деталей.]
@@ -41,6 +42,9 @@ pm_internet_tooltip = [Уроки / Форумы
 Update = [Обновить]
 Settings = [Настройки]
 UI_testing_tooltip = [Переключатель режима "Тестирования графики"]
+pm_new_project_folder_tooltip = [Папка для создания нового проэкта.]
+new_project_name = [Имя нового проэкта]
+duringscanningforprojects = [Сканирую систему. Подождите...]
 
 
 
