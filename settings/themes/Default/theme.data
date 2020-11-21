@@ -12,3 +12,4 @@ node_background = 0.3,0.3,0.3,0.75
 node_blendfile = 0.32,0.41,0.41,1
 node_badfile = 0.62,0.20,0.24,1
 text_normal = 1,1,1,1
+dark_overdrop = 0,0,0,0.5
