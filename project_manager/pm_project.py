@@ -10,6 +10,13 @@ from settings import talk
 
 def new(name):
     
+    # Removing all the bad characters
+    
+    name.replace("/","_").replace(" ", "_")\
+    .replace('"',"_").replace("(","_").replace(")","_").replace("'","_")\
+    .replace("[","_").replace("]","_").replace("{","_").replace("}","_")
+    
+    
     # This function makes a new project.
     
     # If there is not such a folder. As in the settings.

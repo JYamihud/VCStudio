@@ -30,6 +30,7 @@ def layer(win):
                                                       win.current['h'])
     layer = cairo.Context(surface)
     
+    
     #text setting
     layer.select_font_face("Monospace", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_NORMAL)
     
@@ -38,9 +39,14 @@ def layer(win):
         50,
         5, 
         win.current["w"] - 55,
-        win.current["h"] - 10,
+        win.current["h"] - 30,
         20)
     
+    # Little verion thing in the bottom corner
+    UI_color.set(layer, win, "testing_banner")
+    layer.set_font_size(15)
+    layer.move_to(win.current["w"]-50, win.current["h"] - 7)
+    layer.show_text("20.11")
     
     
     # Side bar. First 3. New project / Search Projects / Configure Project.
@@ -48,6 +54,7 @@ def layer(win):
     # New Project
     def do():
         print("New Project")
+        win.url = "new_project"
     
     UI_elements.roundrect(layer, win,
         5,
@@ -57,14 +64,16 @@ def layer(win):
         10,
         do,
         "new_file",
-        talk.text("createnewproject_tooltip"))
+        talk.text("createnewproject_tooltip"),
+        url="project_manager")
     
     
     
     # Search for projects
     def do():
-        pm_project.scan()
-    
+        
+        win.url = "scan_projects"
+        
     UI_elements.roundrect(layer, win,
         5,
         55, 
@@ -73,7 +82,8 @@ def layer(win):
         10,
         do,
         "search_file",
-        talk.text("scanforprojects_tooltip"))
+        talk.text("scanforprojects_tooltip"),
+        url="project_manager")
     
     
     # Configure
@@ -90,14 +100,15 @@ def layer(win):
             10,
             do,
             "configure_file",
-            talk.text("convertoldproject_tooltip"))
+            talk.text("convertoldproject_tooltip"),
+            url="project_manager")
         
     
     # Side bar. Last 3. Internet things / Updater / Settings
     
     # Internet things
     def do():
-        print("Internet")
+        print("Question")
         os.system("xdg-open https://github.com/JYamihud/VCStudio")
     
     UI_elements.roundrect(layer, win,
@@ -107,8 +118,9 @@ def layer(win):
         40,
         10,
         do,
-        "internet",
-        talk.text("pm_internet_tooltip"))
+        "question",
+        talk.text("pm_internet_tooltip"),
+        url="project_manager")
     
     # Update
     def do():
@@ -123,7 +135,8 @@ def layer(win):
         10,
         do,
         "update",
-        talk.text("Update"))
+        talk.text("Update"),
+        url="project_manager")
     
     # Internet things
     def do():
@@ -138,7 +151,8 @@ def layer(win):
         10,
         do,
         "settings",
-        talk.text("Settings"))
+        talk.text("Settings"),
+        url="project_manager")
     
     # Now let's make previews of projects. I think each one will be it's own
     # layer thingy. Just so I could draw things inside them.
@@ -148,7 +162,7 @@ def layer(win):
         50,
         5, 
         win.current["w"] - 55,
-        win.current["h"] - 10,
+        win.current["h"] - 30,
         20,
         fill=False)
     layer.clip()
@@ -179,10 +193,11 @@ def layer(win):
         50,
         5, 
         win.current["w"] - 55,
-        win.current["h"] - 10,
+        win.current["h"] - 30,
         tileY+340,
         bar=True,
-        mmb=True
+        mmb=True,
+        url="project_manager"
         )
     
     
@@ -215,7 +230,8 @@ def project_node(layer, win, x, y, project):
         20+5,
         button=do,
         fill=False,
-        tip=project+Legacytip)
+        tip=project+Legacytip,
+        url="project_manager")
     node.stroke()
     
     # If project is selected
@@ -234,7 +250,7 @@ def project_node(layer, win, x, y, project):
         
         def do():
             pm_project.load(project)
-            exit()  # Here I might do some kind a setting later
+            Gtk.main_quit()  # Here I might do some kind a setting later
             
         UI_elements.roundrect(node, win,
             x-5,
@@ -243,12 +259,16 @@ def project_node(layer, win, x, y, project):
             320+10,
             20+5,
             button=do,
-            fill=False
+            fill=False,
+            url="project_manager"
             )
         
         # Enter keys
-        if 65293 in win.current["keys"] or 65421 in win.current["keys"]:
-            do()
+        if win.url == "project_manager":
+            if 65293 in win.current["keys"] or 65421 in win.current["keys"]:
+                do()
+                win.current["keys"].remove(65293)
+                win.current["keys"].remove(65421)
     
     # This next roundrect will both be the backdrop of the node and both will 
     # clip the node content. All folowing graphics will be drawn clipped to the

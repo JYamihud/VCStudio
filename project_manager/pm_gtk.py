@@ -17,6 +17,8 @@ from settings import settings
 from settings import talk
 from project_manager import pm_project
 from project_manager import pm_mainLayer
+from project_manager import pm_newprojectLayer
+from project_manager import pm_scanLayer
 
 # UI modules
 from UI import UI_testing
@@ -65,8 +67,11 @@ def run():
     win.current    = {}
     win.images     = {}
     win.imageload  = False
+    win.text       = {}
+    win.textactive = ""
     win.scroll     = {}
     win.FPS        = 0
+    win.url        = "project_manager"
     
     # Cashed tables
     win.color    = UI_color.get_table()
@@ -114,7 +119,11 @@ def pmdrawing(pmdrawing, main_layer, win):
     win.tFPS = win.fFPS - win.sFPS
     if win.current["frame"] % 10 == 0:
         win.FPS = int ( 1.0 / ( win.tFPS.microseconds /1000000))
-    
+        
+        # Fail switch for Graphics.
+        if win.FPS < 10:
+            win.settings["Blur"] = False    
+        
     win.sFPS = datetime.datetime.now()
     
     # Current frame (for animations and things like this)
@@ -130,10 +139,10 @@ def pmdrawing(pmdrawing, main_layer, win):
     #Background color
     UI_color.set(main_layer, win, "background")
     main_layer.rectangle(
-    0,
-    0,
-    win.current['w'],
-    win.current['h'])
+        0,
+        0,
+        win.current['w'],
+        win.current['h'])
     main_layer.fill()
     
     # Tooltips and other junk has to be defined here. And then drawn later to 
@@ -148,15 +157,37 @@ def pmdrawing(pmdrawing, main_layer, win):
     
     # Layers. Order of them matter
     Layers = []
-    Layers.append(pm_mainLayer.layer(win))
-    Layers.append(UI_testing.layer(win))
-    Layers.append(win.tooltip_surface)
+    Layers.append([pm_mainLayer.layer(win),"project_manager"])
+    
+    if win.url == "new_project":
+        Layers.append([pm_newprojectLayer.layer(win), "new_project"])
+    elif win.url == "scan_projects":
+        Layers.append([pm_scanLayer.layer(win), "scan_projects"])
+    
+    Layers.append([UI_testing.layer(win)])
+    Layers.append([win.tooltip_surface])
     
     # Combining layers
     for layer in Layers:
+        if len(layer) > 1:
+            layer, url = layer
+            blur = UI_elements.animate(url+"_blur", win, 50)
+            if win.url != url:
+                blur = UI_elements.animate(url+"_blur", win, blur, 50, 2, True)
+            else:
+                blur = UI_elements.animate(url+"_blur", win, blur, 0, 2, True)
+            layer = UI_elements.blur(layer, win, blur)
+        else:
+            layer = layer[0]
         main_layer.set_source_surface(layer, 0 , 0)
         main_layer.paint()
     
+    # If you press ESC you get back from any window to the main menu.
+    if 65307 in win.current["keys"]:
+        win.url = "project_manager"
+        win.current["project"] = ""
+        win.textactive = ""
+        
     
     # Saving data about this frame for the next one. A bit hard to get WTF am I
     # doing here. Basically trying to avoid current and previous data to be links
