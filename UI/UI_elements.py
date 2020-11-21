@@ -23,13 +23,17 @@ from settings import talk
 from UI import UI_color
 
 def roundrect(layer, win, x, y, width, height, r, button=False, icon=False, 
-              tip="", fill=True):
+              tip="", fill=True, url=""):
     
     # This function draws a rectangle with rounded edges.
     
     # A button variable is a calable for the button action. Basically it's a
     # function. Roundrect will act as a button.
     if button:
+        
+        #if not current url in the software
+        if url and url != win.url:
+            return
         
         # If UI testing is on preview. Buttons.
         if win.current["testing"]:
@@ -136,8 +140,8 @@ def blur(surface, win, amount):
     
     # To avoid all kinds of Zero devision problems. And speed up the draw if
     # using animated blur values.
-    if amount == 0:
-        return surface
+    if amount < 3: # When Blue value was less then 3 it felt sharp but not enough
+        return surface # Which caused sense of uneasiness. 
     
     # Setting up initial Blur
     if not "Blur" in win.settings:
@@ -343,7 +347,8 @@ def tooltip(win, text):
         layer.show_text(line)
         
 def scroll_area(layer, win, name, x, y, width, height, maxlength, 
-                           bar=False,sideways=False, mmb=False, mmb_only=False):
+                           bar=False,sideways=False, mmb=False, mmb_only=False,
+                           url=""):
     
     # This function going to handle all the scrolling windows. Making it so it's
     # relativelly simple to set up big widgets with in small areas. 
@@ -380,6 +385,8 @@ def scroll_area(layer, win, name, x, y, width, height, maxlength,
     # Here is a function thingy.
     
     def logic():
+        if url and url != win.url:
+            return
         # Scroll logic
         win.scroll[name] -= amount
         
@@ -478,3 +485,278 @@ def scroll_area(layer, win, name, x, y, width, height, maxlength,
                 LSy,
                 5
                 )
+                
+
+def text(outlayer, win, name, x, y, width, height, set_text="", parse=False, fill=True,
+        editable=True, multiline=False , linebreak=False, centered=False):
+    
+    # This function will handle all the text writting in the software.
+    # I'm not sure about how parsing going to work for script files later. 
+    # But if it's currently works, means that I already implemented it into 
+    # the program. 
+    
+    # Making the layer
+    surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, width, height)
+    layer = cairo.Context(surface)
+    layer.select_font_face("Monospace", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_NORMAL)
+    layer.set_font_size(20)
+    
+    # Some challenges that it will have is how to correctly store data about
+    # the text in the system. I think we can use the win.text variable to store
+    # directories of the data.
+    
+    if name not in win.text:
+        
+        # I need to get something done before I can pu scroll in.
+        scrollname = name
+        while scrollname in win.scroll:
+            scrollname = scrollname+"_text"
+        
+        win.text[name] = {
+            "text"  :set_text,  # Actuall text you are editing.
+            "cursor":[len(str(set_text)),len(str(set_text))], # Cursor
+            "insert":False, # Whether the insert mode is on
+            "scroll":scrollname # If multiline. The pointer for the scroll value.
+            }
+    
+    # Background
+    if fill:
+        UI_color.set(layer, win, "darker_parts")
+        roundrect(layer, win, 
+            0,
+            0,
+            width,
+            height,
+            10)
+        layer.fill()
+    
+    # Now after filling it up. I want to clip everything. SO no text will get
+    # out of a given area. 
+    roundrect(layer, win, 
+        0,
+        0,
+        width,
+        height,
+        10, 
+        fill=False)
+    layer.clip()
+    
+    # Now I want to give a preview of the text it self. BUT. I need to be sure 
+    # that if the text longer then a given width and there is no multiline or a
+    # linebreak. Then it scrolls sideways to the cursor. 
+    
+    # Automatic scroll system: Based on the position of the cursor.
+    offsetX = 0
+    cursor2location = win.text[name]["cursor"][1]*12 + offsetX
+    while cursor2location > width - 50:
+        offsetX -= 1
+        cursor2location = win.text[name]["cursor"][1]*12 + offsetX
+        
+    
+    # Text selection. AKA cursor
+    # So here we draw the cursor
+    if editable:
+        UI_color.set(layer, win, "node_blendfile")
+        if win.text[name]["cursor"][0] == win.text[name]["cursor"][1]:
+            layer.rectangle(
+                win.text[name]["cursor"][0]*12+5 +offsetX,
+                5,
+                (win.text[name]["cursor"][1]*12)-(win.text[name]["cursor"][0]*12)+2,
+                30
+                )
+        else:
+            roundrect(layer, win, 
+                win.text[name]["cursor"][0]*12+5 +offsetX,
+                5,
+                (win.text[name]["cursor"][1]*12)-(win.text[name]["cursor"][0]*12)+2,
+                30,
+                5,
+                fill=False
+                )
+        if win.textactive == name:
+            layer.fill()
+        else:
+            layer.stroke()
+    
+    
+    # Making sure that cursor is correct. Because a lot of bugs are happening
+    # with it and it's not cool.
+    
+    # If second part of selection ends up bigger then the first. Reverse them.
+    if win.text[name]["cursor"][0] > win.text[name]["cursor"][1]:
+        win.text[name]["cursor"] = [
+            win.text[name]["cursor"][1],
+            win.text[name]["cursor"][0]]
+    
+    # If any part ends up beyond the text. Clip them in.
+    if win.text[name]["cursor"][0] < 0:
+        win.text[name]["cursor"][0] = 0
+    if win.text[name]["cursor"][1] < 0:
+        win.text[name]["cursor"][1] = 0
+    if win.text[name]["cursor"][0] > len(str(win.text[name]["text"])):
+        win.text[name]["cursor"][0] = len(str(win.text[name]["text"]))
+    if win.text[name]["cursor"][1] > len(str(win.text[name]["text"])):
+        win.text[name]["cursor"][1] = len(str(win.text[name]["text"]))
+    
+    
+    
+    # Drawing the text
+    
+    UI_color.set(layer, win, "text_normal")
+    layer.move_to(5+offsetX, height/2+5)
+    if centered:
+        layer.move_to(width/2-len(str(win.text[name]["text"]))*12/2, height/2+5)
+    layer.show_text(str(win.text[name]["text"]))
+    
+    # Editing the text
+    if win.current["keys"] and editable and name == win.textactive:
+        # Let's filter the input first. 
+        # For example
+        if not multiline: #Removing enter key press
+            if 65293 in win.current["keys"] or 65421 in win.current["keys"]:
+                win.current["key_letter"] = ""
+        
+        prevlen = len(win.text[name]["text"])
+        clipboard = Gtk.Clipboard.get(Gdk.SELECTION_CLIPBOARD)
+        regularclean = True
+        ORD = 0
+        try:
+            ORD = ord(win.current["key_letter"])
+        except:
+            pass
+        backremove = False # Whether to make selection go to 0 width thing
+        #print(ORD, win.text[name]["cursor"][0])
+        
+        
+        # Backspace
+        if 65288 in win.current["keys"]:
+            if win.text[name]["cursor"][0] != 0 and win.text[name]["cursor"][0]\
+                                           == win.text[name]["cursor"][1]:
+                
+                win.text[name]["text"] = win.text[name]["text"]\
+                [:win.text[name]["cursor"][0]-1]+\
+                 win.text[name]["text"]\
+                [win.text[name]["cursor"][1]:]
+                
+            elif win.text[name]["cursor"][1] != 0 and win.text[name]["cursor"][0]\
+                                           != win.text[name]["cursor"][1]:
+                                           
+                win.text[name]["text"] = win.text[name]["text"]\
+                [:win.text[name]["cursor"][0]]+\
+                 win.text[name]["text"]\
+                [win.text[name]["cursor"][1]:]
+                backremove = True
+            
+        # Ctrl - C
+        elif ORD == 3:
+            
+            cliptext = str(clipboard.wait_for_text())
+            
+            clipboard.set_text( win.text[name]["text"]\
+            [win.text[name]["cursor"][0]:win.text[name]["cursor"][1]], -1)
+        
+        # Ctrl - V
+        elif ORD == 22:
+            
+            cliptext = str(clipboard.wait_for_text())
+            
+            win.text[name]["text"] = win.text[name]["text"]\
+            [:win.text[name]["cursor"][0]]\
+             + cliptext +\
+            win.text[name]["text"]\
+            [win.text[name]["cursor"][1]:]
+            win.text[name]["cursor"][0] = win.text[name]["cursor"][1]
+        
+        # Ctrl - A
+        elif ORD == 1:
+            win.text[name]["cursor"][0] = 0
+            win.text[name]["cursor"][1] = len(win.text[name]["text"])
+        
+        # To clear up the Controll
+        elif 65507 in win.current["keys"]:
+            pass
+        
+        # Shift
+        elif 65506 in win.current["keys"]:
+            # Right
+            if 65363 in win.current["keys"]:
+                win.text[name]["cursor"][1] = win.text[name]["cursor"][1] + 1
+                #win.current["keys"].remove(65363)
+            
+            # Left
+            elif 65361 in win.current["keys"]:
+                if win.text[name]["cursor"][1] > win.text[name]["cursor"][0]:
+                    win.text[name]["cursor"][1] = win.text[name]["cursor"][1] - 1
+                #win.current["keys"].remove(65361)
+                
+        # Right button
+        elif 65363 in win.current["keys"]:
+            win.text[name]["cursor"][0] = win.text[name]["cursor"][0] + 1
+            win.text[name]["cursor"][1] = win.text[name]["cursor"][0]
+            win.current["keys"].remove(65363)
+        
+        # Left button
+        elif 65361 in win.current["keys"]:
+            win.text[name]["cursor"][0] = win.text[name]["cursor"][0] - 1
+            win.text[name]["cursor"][1] = win.text[name]["cursor"][0]
+            win.current["keys"].remove(65361)
+        
+        # Escape
+        elif 65307 in win.current["keys"]:
+            win.textactive = ""
+            win.current["keys"].remove(65307)
+            
+        else:
+            win.text[name]["text"] = win.text[name]["text"]\
+            [:win.text[name]["cursor"][0]]\
+             + win.current["key_letter"]+\
+            win.text[name]["text"]\
+            [win.text[name]["cursor"][1]:]
+            
+               
+        # Auto moving the cursor    
+        nowlen = len(win.text[name]["text"])
+        if win.text[name]["cursor"][0] == win.text[name]["cursor"][1]:
+            win.text[name]["cursor"][0] = win.text[name]["cursor"][0] + (nowlen - prevlen)
+            win.text[name]["cursor"][1] = win.text[name]["cursor"][0]
+        
+        elif backremove:
+            win.text[name]["cursor"][1] = win.text[name]["cursor"][0]
+        
+        
+        if nowlen != prevlen and regularclean:
+            # Deleting all the keys from the keys. So yeah.
+            win.current["keys"] = [] 
+            
+    
+    
+    
+    # Outputing to the outlayer. 
+    outlayer.set_source_surface(surface, x, y)
+    outlayer.paint() 
+    
+    # Button if editable.
+    if editable:
+        def do():
+            win.textactive = name
+        roundrect(outlayer, win, 
+            x,
+            y,
+            width,
+            height,
+            10, 
+            fill=False,
+            button=do)
+        outlayer.stroke()
+    
+    if win.textactive == name:
+        UI_color.set(outlayer, win, "button_active")
+        roundrect(outlayer, win, 
+            x,
+            y,
+            width,
+            height,
+            10, 
+            fill=False)
+        outlayer.stroke()
+
