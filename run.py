@@ -29,7 +29,7 @@ try:
     
 
 except Exception:
-    raise()
+    
     # If some mistake happened
 
     # Testing the software
