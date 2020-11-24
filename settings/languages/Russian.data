@@ -45,6 +45,13 @@ UI_testing_tooltip = [Переключатель режима "Тестиров�
 pm_new_project_folder_tooltip = [Папка для создания нового проэкта.]
 new_project_name = [Имя нового проэкта]
 duringscanningforprojects = [Сканирую систему. Подождите...]
-
+Developer = [Разработчик]
+help_movies_done_title = [Фильмы сделанны с помошью VCStudio (Blender-Organizer):]
+In_Production = [В продукцие]
+help_tutorial_title = [Видео уроки:]
+ClickToWatch = [Нажмите чтобы посмотреть.]
+tutorial_legacy_analitycs = [Blender-Organizer: Аналитика - Урок]
+tutorial_legacy_storyeditor = [Blender-Organizer: Редактор-Сюжета - Урок]
+tutorial_legacy_assets = [Blender-Organizer: Ассеты - Урок]
 
 
