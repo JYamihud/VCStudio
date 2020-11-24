@@ -1,3 +1,23 @@
+VERSION 20.111
+
+settings/languages/Dumbass.data
+settings/languages/English.data
+settings/languages/Russian.data
+settings/settings.py
+settings/update.data
+project_manager/pm_gtk.py
+project_manager/pm_mainLayer.py
+project_manager/pm_project.py
+project_manager/pm_newprojectLayer.py
+project_manager/scanLayer.py
+project_manager/helpLayer.py
+UI/UI_elements.py
+UI/UI_testing.py
+settings/themes/Default/theme.data
+settings/themes/Default/icons/video.png
+
+[https://github.com/JYamihud/VCStudio]
+
 VERSION 20.11
 
 run.py
