@@ -23,7 +23,7 @@ from settings import talk
 from UI import UI_color
 
 def roundrect(layer, win, x, y, width, height, r, button=False, icon=False, 
-              tip="", fill=True, url=""):
+              tip="", fill=True, url="", clip=False):
     
     # This function draws a rectangle with rounded edges.
     
@@ -46,6 +46,19 @@ def roundrect(layer, win, x, y, width, height, r, button=False, icon=False,
         and win.current['my'] in range(int(y), int(y+height)) :
             do = True
             
+            if clip:
+                if  win.current['mx'] in range(int(clip[0]), int(clip[0]+clip[2])) \
+                and win.current['my'] in range(int(clip[1]), int(clip[1]+clip[3])) :
+                    do = True
+                else:
+                    do = False
+        
+        else:
+            do = False
+        
+        
+            
+        if do:
             # If holding click
             if win.current["LMB"]:
                 UI_color.set(layer, win, "button_clicked")
@@ -58,10 +71,6 @@ def roundrect(layer, win, x, y, width, height, r, button=False, icon=False,
             # Button might have a tooltip as well
             if tip:
                 tooltip(win, tip)
-        
-        else:
-            do = False
-        
         
         
     else:
@@ -582,6 +591,13 @@ def text(outlayer, win, name, x, y, width, height, set_text="", parse=False, fil
     # Making sure that cursor is correct. Because a lot of bugs are happening
     # with it and it's not cool.
     
+    # Mouse select
+    if win.current["LMB"]:
+        if int(win.current["mx"]) in range(int(x), int(x+width))\
+        and int(win.current["my"]) in range(int(y), int(y+height)):
+            win.text[name]["cursor"][0] = int((win.current["LMB"][0]-x-offsetX)/12)
+            win.text[name]["cursor"][1] = int((win.current["mx"]-x-offsetX)/12)
+            
     # If second part of selection ends up bigger then the first. Reverse them.
     if win.text[name]["cursor"][0] > win.text[name]["cursor"][1]:
         win.text[name]["cursor"] = [
