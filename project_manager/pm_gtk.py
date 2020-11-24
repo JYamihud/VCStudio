@@ -19,6 +19,7 @@ from project_manager import pm_project
 from project_manager import pm_mainLayer
 from project_manager import pm_newprojectLayer
 from project_manager import pm_scanLayer
+from project_manager import pm_helpLayer
 
 # UI modules
 from UI import UI_testing
@@ -90,6 +91,19 @@ def run():
     
     previous(win)
     
+    # Version of the software
+    win.version = 0.0
+    try:
+        vfile = open("settings/update.data")
+        vfile = vfile.read()
+        vfile = vfile.split("\n")
+        
+        for line in vfile:
+            if line.startswith("VERSION "):
+                win.version = float(line.replace("VERSION ", ""))
+    except:
+        win.version = 0.0
+        
     # FPS
     win.sFPS = datetime.datetime.now()
     
@@ -163,6 +177,8 @@ def pmdrawing(pmdrawing, main_layer, win):
         Layers.append([pm_newprojectLayer.layer(win), "new_project"])
     elif win.url == "scan_projects":
         Layers.append([pm_scanLayer.layer(win), "scan_projects"])
+    elif win.url == "help_layer":
+        Layers.append([pm_helpLayer.layer(win), "help_layer"])
     
     Layers.append([UI_testing.layer(win)])
     Layers.append([win.tooltip_surface])

@@ -12,7 +12,7 @@ def new(name):
     
     # Removing all the bad characters
     
-    name.replace("/","_").replace(" ", "_")\
+    name = name.replace("/","_").replace(" ", "_")\
     .replace('"',"_").replace("(","_").replace(")","_").replace("'","_")\
     .replace("[","_").replace("]","_").replace("{","_").replace("}","_")
     

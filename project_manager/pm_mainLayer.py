@@ -40,13 +40,13 @@ def layer(win):
         5, 
         win.current["w"] - 55,
         win.current["h"] - 30,
-        20)
+        30)
     
     # Little verion thing in the bottom corner
     UI_color.set(layer, win, "testing_banner")
     layer.set_font_size(15)
     layer.move_to(win.current["w"]-50, win.current["h"] - 7)
-    layer.show_text("20.11")
+    layer.show_text(str(win.version))
     
     
     # Side bar. First 3. New project / Search Projects / Configure Project.
@@ -108,8 +108,7 @@ def layer(win):
     
     # Internet things
     def do():
-        print("Question")
-        os.system("xdg-open https://github.com/JYamihud/VCStudio")
+        win.url = "help_layer"
     
     UI_elements.roundrect(layer, win,
         5,
@@ -163,7 +162,7 @@ def layer(win):
         5, 
         win.current["w"] - 55,
         win.current["h"] - 30,
-        20,
+        30,
         fill=False)
     layer.clip()
     
