@@ -64,8 +64,7 @@ def layer(win):
         fill=False,
         centered=True,
         editable=False)
-    if "New-Project-Folder" in win.settings: # It might not exist there.
-        win.text["new_project_title"]["text"] = talk.text("createnewproject_tooltip")
+    win.text["new_project_title"]["text"] = talk.text("createnewproject_tooltip")
     
     
     
