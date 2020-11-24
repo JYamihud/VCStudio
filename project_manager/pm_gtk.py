@@ -101,6 +101,7 @@ def run():
         for line in vfile:
             if line.startswith("VERSION "):
                 win.version = float(line.replace("VERSION ", ""))
+                break
     except:
         win.version = 0.0
         

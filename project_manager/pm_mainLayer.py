@@ -45,7 +45,7 @@ def layer(win):
     # Little verion thing in the bottom corner
     UI_color.set(layer, win, "testing_banner")
     layer.set_font_size(15)
-    layer.move_to(win.current["w"]-50, win.current["h"] - 7)
+    layer.move_to(win.current["w"]-80, win.current["h"] - 7)
     layer.show_text(str(win.version))
     
     
