@@ -2,7 +2,7 @@ VERSION 20.112
 
 settings/update.data
 project_manager/helpLayer.py
-project_manager/updateLayer.py
+project_manager/pm_updateLayer.py
 project_manager/pm_gtk.py
 project_manager/pm_mainLayer.py
 project_manager/update_reader.py
