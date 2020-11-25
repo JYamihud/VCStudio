@@ -1,8 +1,6 @@
 # THIS FILE IS A PART OF VCStudio
 # PYTHON 3
 
-# This a console project manager.
-
 import os
 import datetime
 
@@ -20,6 +18,9 @@ from project_manager import pm_mainLayer
 from project_manager import pm_newprojectLayer
 from project_manager import pm_scanLayer
 from project_manager import pm_helpLayer
+from project_manager import pm_updateLayer
+from project_manager import update_reader
+from project_manager import pm_installUpdatesLayer
 
 # UI modules
 from UI import UI_testing
@@ -73,6 +74,9 @@ def run():
     win.scroll     = {}
     win.FPS        = 0
     win.url        = "project_manager"
+    win.update     = {"versions":{}}
+    
+    
     
     # Cashed tables
     win.color    = UI_color.get_table()
@@ -141,6 +145,12 @@ def pmdrawing(pmdrawing, main_layer, win):
         
     win.sFPS = datetime.datetime.now()
     
+    # Getting update info. I've added a bit of delay. So the starting of the
+    # Popen would not be noticed by the user as much. 
+    if win.current["frame"] > 50:
+        update_reader.get_update_info(win)
+    
+    
     # Current frame (for animations and things like this)
     win.current["frame"] += 1    
     
@@ -180,6 +190,11 @@ def pmdrawing(pmdrawing, main_layer, win):
         Layers.append([pm_scanLayer.layer(win), "scan_projects"])
     elif win.url == "help_layer":
         Layers.append([pm_helpLayer.layer(win), "help_layer"])
+    elif win.url == "update_layer":
+        Layers.append([pm_updateLayer.layer(win), "update_layer"])
+    elif win.url == "install_updates":
+        Layers.append([pm_installUpdatesLayer.layer(win), "install_updates"])
+        
     
     Layers.append([UI_testing.layer(win)])
     Layers.append([win.tooltip_surface])
@@ -200,7 +215,7 @@ def pmdrawing(pmdrawing, main_layer, win):
         main_layer.paint()
     
     # If you press ESC you get back from any window to the main menu.
-    if 65307 in win.current["keys"]:
+    if 65307 in win.current["keys"] and win.url != "install_updates":
         win.url = "project_manager"
         win.current["project"] = ""
         win.textactive = ""

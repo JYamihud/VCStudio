@@ -1,8 +1,6 @@
 # THIS FILE IS A PART OF VCStudio
 # PYTHON 3
 
-# This a console project manager.
-
 import os
 
 # GTK module ( Graphical interface
@@ -123,8 +121,7 @@ def layer(win):
     
     # Update
     def do():
-        print("Update")
-        os.system("xdg-open https://github.com/JYamihud/VCStudio")
+        win.url = "update_layer"
     
     UI_elements.roundrect(layer, win,
         5,
@@ -136,6 +133,27 @@ def layer(win):
         "update",
         talk.text("Update"),
         url="project_manager")
+    
+    # I gonna draw a little thingy for if a new update is available
+    try:
+        if win.update["count"]:
+            count = str(win.update["count"])
+            
+            UI_color.set(layer, win, "node_background")
+            UI_elements.roundrect(layer, win,
+                30,
+                win.current["h"]-100, 
+                len(count)*12+6,
+                25,
+                5)
+            layer.fill()
+            UI_color.set(layer, win, "text_normal")
+            layer.set_font_size(20)
+            layer.move_to(33,win.current["h"]-80)
+            layer.show_text(count)
+            
+    except:
+        pass
     
     # Internet things
     def do():

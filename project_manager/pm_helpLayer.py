@@ -1,8 +1,6 @@
 # THIS FILE IS A PART OF VCStudio
 # PYTHON 3
 
-# This a console project manager.
-
 import os
 
 # GTK module ( Graphical interface
@@ -84,7 +82,7 @@ def layer(win):
     if "pm_help" not in win.scroll:
         win.scroll["pm_help"] = 0
     
-    current_Y = 0 # The max scroll value
+    current_Y = 1 # The max scroll value
     
     # VCStudio icon. 
     UI_elements.image(layer, win, "tinyicon.png", win.current["w"]/2-205, 
@@ -123,13 +121,23 @@ def layer(win):
     
     # Links to my accounts
     
+    # Originally I wanted YouTube to be on the list as well. As you may know
+    # I have a little YouTube channel called "Blender Dumbass". But I dislike
+    # Youtube. And I don't want to promote it. 
+    
+    # I'm concidering to remove Patreon and Twitter as well. Let me thing about
+    # it.
+    
+    
     links = {
     "Devtalk":"https://devtalk.blender.org/u/blenderdumbass",
     "GitHub":"https://github.com/JYamihud",
-    "Telegram":"https://t.me/blenderdumbasschat",
+    "Telegram 1":"https://t.me/blenderorganizer",
+    "Telegram 2":"https://t.me/blenderdumbasschat",
+    "Telegram 3":"https://t.me/moriasrace",
     "Patreon":"https://www.patreon.com/blenderdumbass",
     "Twitter":"https://twitter.com/blenderdumbass",
-    #"YouTube":"https://www.youtube.com/channel/UCxYyw4dTURyae2yTt50AH-Q",
+    "Bl-chat":"https://blender.chat/channel/blenderorganizer_vcstudio",
     "LBRY":"https://lbry.tv/$/invite/@BlenderDumbass:c",
     "Music":"https://open.lbry.com/@J.Y.AmihudMusic:c?r=GLhXoQ3zcpvm6rzd9Z6dAyasTpmk1FUY",
     "Movies":"https://open.lbry.com/@VCS:7?r=GLhXoQ3zcpvm6rzd9Z6dAyasTpmk1FUY"
