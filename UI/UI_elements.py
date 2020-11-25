@@ -363,6 +363,9 @@ def scroll_area(layer, win, name, x, y, width, height, maxlength,
     # relativelly simple to set up big widgets with in small areas. 
     # It will handle only the value of the scroll stored in win.scroll[name]
     
+    if maxlength == 0:
+        maxlength = 1
+    
     # First let's set one up if it's not setup
     if name not in win.scroll:
         win.scroll[name] = 0
