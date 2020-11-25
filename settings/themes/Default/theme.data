@@ -11,5 +11,10 @@ button_clicked = 0.5,0.5,0.5,1
 node_background = 0.3,0.3,0.3,0.75
 node_blendfile = 0.32,0.41,0.41,1
 node_badfile = 0.62,0.20,0.24,1
+node_imagefile = 0.54,0.49,0.17,1
+node_asset = 0.43,0.36,0.68,1
 text_normal = 1,1,1,1
 dark_overdrop = 0,0,0,0.5
+progress_background = 0.81,0.81,0.81,1
+progress_active = 0.76,0.57,0.40,1
+
