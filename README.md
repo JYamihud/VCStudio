@@ -1,5 +1,9 @@
 ![BLENDER-ORGANIZER](icon.png)
 
+## Contact
+[Blender.chat](https://blender.chat/channel/blenderorganizer_vcstudio)
+[devtalk.Blender.org](https://devtalk.blender.org/t/blender-organizer-vcstudio-organization-of-the-projects)
+
 # VCStudio
 
 New And Improved Movie Creation Tool, Based on [Blender Organizer](https://github.com/JYamihud/blender-organizer).
@@ -23,7 +27,7 @@ The current Moria's Race project is now using the old one. But since it's a rela
 - [x] Build a terminal based application for checking the VCStudio installation. (troubleshooter)
 - [ ] Build a automatic fixer to the troubleshooter.
 - [x] Build a terminal based manager for creating new projects / entering them / and configuring basic settings.
-- [ ] Make a Graphical version of the manager. (Not on every system you have access to graphical interface)
+- [x] Make a Graphical version of the manager. (Not on every system you have access to graphical interface)
 - [ ] Make a tranlating layer. Or a recofiguration layer. To move old project to the new system.
 - [ ] Make a terminal based VCStudio with all the features of the organizer.
 - [ ] Make a Graphical version of the VCStudio.
