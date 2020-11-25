@@ -1,14 +1,3 @@
-VERSION 20.12
-
-settings/themes/Default/icons/configure_file.png
-settings/themes/Default/icons/folder.png
-settings/themes/Default/icons/internet.png
-settings/themes/Default/icons/new_file.png
-settings/themes/Default/icons/ok.png
-HELP.txt
-
-[https://blender.chat/channel/blenderorganizer_vcstudio]
-
 VERSION 20.112
 
 settings/update.data
@@ -19,8 +8,17 @@ project_manager/pm_mainLayer.py
 project_manager/update_reader.py
 project_manager/update_request.py
 settings/themes/Default/theme.data
+settings/themes/Default/icons/open.png
+settings/themes/Default/icons/closed.png
+UI/UI_elements.py
+settings/languages/Dumbass.data
+settings/languages/English.data
+settings/languages/Russian.data
+project_manager/pm_installUpdatesLayer.py
+HELP.txt
 
-[https://github.com/JYamihud/VCStudio/wiki/Version-20.111]
+[https://github.com/JYamihud/VCStudio/wiki/Version-20.112-(Semi-Automatic-Update-System)]
+
 
 VERSION 20.111
 
