@@ -1,5 +1,10 @@
 VERSION 20.12
 
+settings/themes/Default/icons/configure_file.png
+settings/themes/Default/icons/folder.png
+settings/themes/Default/icons/internet.png
+settings/themes/Default/icons/new_file.png
+settings/themes/Default/icons/ok.png
 HELP.txt
 
 [https://blender.chat/channel/blenderorganizer_vcstudio]
