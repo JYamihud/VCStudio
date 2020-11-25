@@ -4,6 +4,19 @@ HELP.txt
 
 [https://blender.chat/channel/blenderorganizer_vcstudio]
 
+VERSION 20.112
+
+settings/update.data
+project_manager/helpLayer.py
+project_manager/updateLayer.py
+project_manager/pm_gtk.py
+project_manager/pm_mainLayer.py
+project_manager/update_reader.py
+project_manager/update_request.py
+settings/themes/Default/theme.data
+
+[https://github.com/JYamihud/VCStudio/wiki/Version-20.111]
+
 VERSION 20.111
 
 settings/languages/Dumbass.data
