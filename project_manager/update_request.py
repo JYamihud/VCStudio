@@ -16,6 +16,7 @@ try:
     resp = http.request('GET', filepath)
     print(resp.data.decode('utf-8'))
 except:
-    print("404: Not found")
+    data = open("settings/update.data")
+    print(data.read())
 
 print("END")

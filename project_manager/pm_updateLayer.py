@@ -140,7 +140,7 @@ def layer(win):
         layer.show_text(str(version)+" "+sufix)
         
         def do():
-            os.system("xdg-open "+link)
+            os.system("xdg-open "+link.replace("(", "\(").replace(")", "\)"))
         
         UI_elements.roundrect(layer, win, 
             win.current["w"]/2-200,

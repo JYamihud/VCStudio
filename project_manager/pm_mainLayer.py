@@ -155,10 +155,9 @@ def layer(win):
     except:
         pass
     
-    # Internet things
+    # Settings
     def do():
-        print("Settings")
-        os.system("xdg-open "+os.getcwd()+"/settings/settings.data")
+        win.url = "settings_layer"
     
     UI_elements.roundrect(layer, win,
         5,

@@ -21,6 +21,7 @@ from project_manager import pm_helpLayer
 from project_manager import pm_updateLayer
 from project_manager import update_reader
 from project_manager import pm_installUpdatesLayer
+from project_manager import pm_settingsLayer
 
 # UI modules
 from UI import UI_testing
@@ -139,8 +140,11 @@ def pmdrawing(pmdrawing, main_layer, win):
     if win.current["frame"] % 10 == 0:
         win.FPS = int ( 1.0 / ( win.tFPS.microseconds /1000000))
         
+        if "Auto_De-Blur" not in win.settings:
+            win.settings["Auto_De-Blur"] = True
+        
         # Fail switch for Graphics.
-        if win.FPS < 10:
+        if win.FPS < 10 and win.settings["Auto_De-Blur"]:
             win.settings["Blur"] = False    
         
     win.sFPS = datetime.datetime.now()
@@ -194,6 +198,8 @@ def pmdrawing(pmdrawing, main_layer, win):
         Layers.append([pm_updateLayer.layer(win), "update_layer"])
     elif win.url == "install_updates":
         Layers.append([pm_installUpdatesLayer.layer(win), "install_updates"])
+    elif win.url == "settings_layer":
+        Layers.append([pm_settingsLayer.layer(win), "settings_layer"])
         
     
     Layers.append([UI_testing.layer(win)])
