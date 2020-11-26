@@ -189,7 +189,7 @@ def layer(win):
                 
                 
                 def do():
-                    gitlink = "https://github.com/JYamihud/VCStudio/commits/main/"
+                    gitlink = "https://notabug.org/jyamihud/VCStudio/commits/master/"
                     os.system("xdg-open "+gitlink+filename)
                 
                 UI_elements.roundrect(layer, win, 
