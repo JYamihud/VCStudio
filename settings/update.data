@@ -1,3 +1,12 @@
+VERSION 20.1131
+
+settings/update.data
+project_manager/update_request.py
+project_manager/pm_installUpdatesLayer.py
+project_manager/pm_updateLayer.py
+
+[https://notabug.org/jyamihud/VCStudio]
+
 VERSION 20.113
 
 settings/update.data
