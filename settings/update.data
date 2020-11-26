@@ -1,3 +1,18 @@
+VERSION 20.113
+
+settings/update.data
+project_manager/pm_updateLayer.py
+project_manager/pm_settingsLayer.py
+project_manager/update_request.py
+project_manager/pm_gtk.py
+project_manager/pm_mainLayer.py
+settings/themes/Default/icons/font.png
+settings/languages/Dumbass.data
+settings/languages/English.data
+settings/languages/Russian.data
+
+[https://open.lbry.com/@blender-organizer:5/Version-20.113-(UI-Settings):9?r=GLhXoQ3zcpvm6rzd9Z6dAyasTpmk1FUY]
+
 VERSION 20.112
 
 settings/update.data
