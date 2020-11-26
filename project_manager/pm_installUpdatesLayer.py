@@ -93,7 +93,7 @@ def layer(win):
         except:
             pass    
         
-        path = "https://raw.githubusercontent.com/JYamihud/VCStudio/main/"
+        path = "https://notabug.org/jyamihud/VCStudio/raw/master/"
         url = path+filename
         
         http = urllib3.PoolManager()
