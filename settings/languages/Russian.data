@@ -62,4 +62,8 @@ update_current = [Данная версия]
 update_previous = [Преведущая версия]
 update_install = [Устоновить обновления]
 update_installing = [Устанавливаю обновления...]
+change_language = [Выбрать язык]
+set_language = [Выбрать ]
+Blur = [Размытость]
+Auto_De-Blur = [Выключать Размытось при 10 ФПС]
 
