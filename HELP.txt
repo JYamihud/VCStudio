@@ -1,42 +1,105 @@
-[ ENGLISH ]
-
-    To Run VCStudio you have to open run.py using python3. On Linux you can
-do that by typing in terminal:
-
-    python3 run.py
+    [ ENGLISH ]
+        
+        Please download this project using the NotABug service. And not GITHUB.
+        https://notabug.org/jyamihud/VCStudio
+        
+    	In order to simplify development and destribution of VCStudio. We do not use
+        binary executables, but rely on a text-based python scripts. A benefit to this
+        is that you run the source-code directly. And you can easily modify the software
+        to suit your needs. (See LICENSE for more details about modifications. GPLv2).
+        
+        A single non-benefit is that you need to have an interpiter to run the software.
+        
+        Recommended:
+        
+        	Python 3 - for GNU / Linux
+        
+        You need to access the folder of the project through terminal. (Usually done by
+        right-clicking on the folder. And selecting "Open In Terminal"). You can also
+        use the cd command. To change directory to a desired one.
+        
+        To run the initialization. Use the following command:
+        
+        	python3 run.py
+        
+        It will start an initial test of your python instalation. Checking that all
+        the nessesary modules are installed. For if some modules are missing. We
+        are developing an automatic fix for it. But we yet to discover problems.
+        So please contact us if you encountered a failed test. See README.md for
+        contact information.
+        
+        After the test is over you may simply repeat the command:
+        
+        	python3 run.py
+        
+        to lauch VCStudio. Or use:
+        
+        	python3 run.py -c
+            
+        to lauch VCStudio in a Terminal. (Without the graphical interface)
+        
+        If you are using a GNOME like desktop where docking is not permitted for
+        software that are not installed. (Like in latest Ubuntu). You will probably
+        need to create a .desktop file. But we are working on a system that will do it
+        for you.
+        
+        If you have any problem or a feature request. Please see README.md for contact
+        information.
+        
+        
+        								J.Y.Amihud (Blender-Dumbass) 27/11/2020
+        
+        
+        
+        
+        
+    [ РУССКИЙ ]
     
-    But you have to be in the correct folder. So right-click on the folder and
-choose "Open Folder In Terminal". And if this option does not exists. You can
-either change folder from the the terminal using cd:
-
-    cd folder-name
-    
-    Or by typing the full path of the file:
-    
-    python3 /home/username/folder/VCStudio/run.py
-    
-    
-    
-    
-    
-[ РУССКИЙ ]
-
-    Для запуска VCStudio вам нужно открыть файл run.py в приложении python3. В
-операционных системах Linux вы это можете сделать написав в терминал:
-
-    python3 run.py
-    
-    Но вам нужно быть в правельной папке. Это можно сделать нажав правой кнопкой
-по папке и выбрать "Открыть Папаку В Терминале". Или если похожей функции нет
-в вашем файл-браузере. Вы можете либо поменять папку в терминале испульзуя cd:
-
-    cd имя-папки
-    
-    Или написав полное имя файла.
-    
-    python3 /home/имя-пользователя/папка/VCStudio/run.py
-    
-    
-    
-    
-test
+    	Пожалуйста скачивайте этот проэкт используя сервис NotABug. А не GitHub.
+        https://notabug.org/jyamihud/VCStudio
+        
+        Для упрощения разработки и распростронения VCStudio. Мы не используем бинарных
+        файлов запуска, а пользуемся текстовыми python скриптами. Это хорошо ибо вы
+        запукаете исходный код на прямую. И это позволяет вам легко изменять программу
+        для ваших нужд. (Смотрите LICENSE для деталей изменения программы. GPLv2).
+        
+        Единственная проблемма это то что вам нужен интерпритатор кода чтобы запустить
+        эту программу.
+        
+        Рекомендуется:
+        
+        	Python 3 - для GNU / Linux
+        
+        Вам нужна зайти в папку проэкта через терминал. (Как правило это делается нажав
+        правой кнопкой по папке и выбрав "Открыть в терминале"). Вы также можете исполь-
+        зовать комманду cd чтобы ввести расположение папки уже в терминале.
+        
+        Для запуска инициализации. Используйте следующею комманду:
+        
+        	python3 run.py
+        
+        Оно проведет проверку модулей python. Если каких-то модулей нехватает. Мы разра-
+        батываем систему что установит их автоматически. Но пока еще проблем с этим небыло.
+        Так что если у вас будет нехватать модулей прошу связатся с нами. Смотрите README.md
+        для контактной информации.
+        
+        После инициализации. Просто повторите комманду:
+        
+        	python3 run.py
+        
+        чтобы запустить VCStudio. Или используйте:
+        
+        	python3 run.py -c
+            
+        чтобы запустить VCStudio в Терминале. (Без графического интерфейса.)
+        
+        Если вы используете систему типа GNOME где присоеденения програм не устоновленных
+        системно к панели запрещенно. (Типа как в Ubuntu последних версий). То вам скорее
+        всего придется создать файл .destop. Но мы уже работаем над тем чтобы програма
+        могла это делать за вас.
+        
+        Если у вас есть вопросы или идеи для функций. Пожалуйста смотрите README.md
+        для контакной информации.
+        
+        
+        								J.Y.Amihud (Blender-Dumbass) 27/11/2020
