@@ -98,6 +98,12 @@ def layer(win):
         
         http = urllib3.PoolManager()
         r = http.request('GET', url, preload_content=False)
+        
+        try:
+            os.mkdir(filename[:filename.rfind("/")])
+        except:
+            pass
+        
         with open(filename, 'wb') as out:
             while True:
                 data = r.read(1024)
