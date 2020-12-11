@@ -100,7 +100,7 @@ def layer(win):
         r = http.request('GET', url, preload_content=False)
         
         try:
-            os.mkdir(filename[:filename.rfind("/")])
+            os.makedirs(filename[:filename.rfind("/")])
         except:
             pass
         
